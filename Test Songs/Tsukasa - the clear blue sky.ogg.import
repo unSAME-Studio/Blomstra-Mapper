@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Tsukasa - the clear blue sky.ogg-286a568be68498dbc2711eb27b31f947.oggstr"
+
+[deps]
+
+source_file="res://Test Songs/Tsukasa - the clear blue sky.ogg"
+dest_files=[ "res://.import/Tsukasa - the clear blue sky.ogg-286a568be68498dbc2711eb27b31f947.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
