@@ -1,9 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Graphics/EditorTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Graphics/Font/EditorFontSmall.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Graphics/Font/EditorFontBig.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Graphics/PanelStyle.tres" type="StyleBox" id=4]
+[ext_resource path="res://Graphics/Temp Icons/noun_Magic Wand_217366.png" type="Texture" id=5]
+[ext_resource path="res://Graphics/Temp Icons/noun_Swipe Up_250138.png" type="Texture" id=6]
+[ext_resource path="res://Graphics/Temp Icons/noun_hold_250190.png" type="Texture" id=7]
+[ext_resource path="res://Graphics/Temp Icons/noun_tap_250133.png" type="Texture" id=8]
+[ext_resource path="res://Graphics/Temp Icons/noun_Music_32986.png" type="Texture" id=9]
+[ext_resource path="res://Graphics/Temp Icons/noun_Save_542998.png" type="Texture" id=10]
+[ext_resource path="res://Graphics/Temp Icons/noun_cog_245085.png" type="Texture" id=11]
+[ext_resource path="res://Scripts/Musics/MusicControls.gd" type="Script" id=12]
+[ext_resource path="res://Scripts/UI/MusicUI.gd" type="Script" id=13]
+[ext_resource path="res://Scripts/UI/PlayButton.gd" type="Script" id=14]
 
 [node name="Editor" type="Node"]
 
@@ -37,75 +47,81 @@ __meta__ = {
 }
 
 [node name="TapNote" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_right = 84.0
+margin_right = 78.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Tap"
+icon = ExtResource( 8 )
+expand_icon = true
 
 [node name="HoldNote" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 88.0
-margin_right = 172.0
+margin_left = 82.0
+margin_right = 160.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Hold"
+icon = ExtResource( 7 )
+expand_icon = true
 
 [node name="SlideNote" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 176.0
-margin_right = 260.0
+margin_left = 164.0
+margin_right = 242.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Slide"
+icon = ExtResource( 6 )
+expand_icon = true
 
 [node name="Effects" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 264.0
-margin_right = 348.0
+margin_left = 246.0
+margin_right = 324.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Effect"
+icon = ExtResource( 5 )
+expand_icon = true
 
 [node name="VSeparator" type="VSeparator" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 352.0
-margin_right = 436.0
+margin_left = 328.0
+margin_right = 406.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 
 [node name="Open" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 440.0
-margin_right = 540.0
+margin_left = 410.0
+margin_right = 488.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Load Music"
+icon = ExtResource( 9 )
+expand_icon = true
 
 [node name="VSeparator2" type="VSeparator" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 544.0
-margin_right = 628.0
+margin_left = 492.0
+margin_right = 570.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 
 [node name="Save" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 632.0
-margin_right = 718.0
+margin_left = 574.0
+margin_right = 652.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Save Map"
+icon = ExtResource( 10 )
+expand_icon = true
 
 [node name="Meta" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 722.0
-margin_right = 841.0
+margin_left = 656.0
+margin_right = 775.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
@@ -113,25 +129,35 @@ custom_fonts/font = ExtResource( 2 )
 text = "Edit Metadata"
 
 [node name="VSeparator3" type="VSeparator" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 845.0
-margin_right = 929.0
+margin_left = 779.0
+margin_right = 857.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 
+[node name="Help" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
+margin_left = 861.0
+margin_right = 939.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Help"
+
 [node name="Settings" type="Button" parent="Control/VBoxContainer/ToolBar/HBoxContainer"]
-margin_left = 933.0
+margin_left = 943.0
 margin_right = 1024.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Settings"
+icon = ExtResource( 11 )
+expand_icon = true
 
 [node name="ViewportContainer" type="ViewportContainer" parent="Control/VBoxContainer"]
 margin_top = 54.0
 margin_right = 1024.0
-margin_bottom = 526.0
+margin_bottom = 493.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -139,11 +165,13 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="Control/VBoxContainer/ViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 3
 
 [node name="PlaybackControls" type="Panel" parent="Control/VBoxContainer"]
-margin_top = 530.0
+margin_top = 497.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 567.0
 rect_min_size = Vector2( 0, 70 )
 custom_styles/panel = ExtResource( 4 )
 
@@ -156,58 +184,64 @@ __meta__ = {
 
 [node name="Play" type="Button" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
 margin_right = 70.0
-margin_bottom = 70.0
+margin_bottom = 74.0
 rect_min_size = Vector2( 70, 70 )
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "Play"
+script = ExtResource( 14 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
+[node name="MusicUI" type="VBoxContainer" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
 margin_left = 74.0
-margin_right = 481.0
-margin_bottom = 70.0
+margin_right = 489.0
+margin_bottom = 74.0
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SongName" type="Label" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/VBoxContainer"]
-margin_right = 407.0
-margin_bottom = 33.0
+[node name="SongName" type="Label" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/MusicUI"]
+margin_right = 415.0
+margin_bottom = 41.0
 custom_fonts/font = ExtResource( 3 )
 text = "Song Name"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/VBoxContainer"]
-margin_top = 37.0
-margin_right = 407.0
-margin_bottom = 58.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/MusicUI"]
+margin_top = 45.0
+margin_right = 415.0
+margin_bottom = 74.0
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SongTimes" type="Label" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_right = 103.0
-margin_bottom = 21.0
+[node name="SongTimes" type="Label" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/MusicUI/HBoxContainer"]
+margin_right = 111.0
+margin_bottom = 29.0
+size_flags_vertical = 6
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.521569, 0.521569, 0.521569, 1 )
 text = "00:00 / 00:00"
 
-[node name="TimeSlider" type="HSlider" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 107.0
-margin_right = 407.0
+[node name="TimeSlider" type="HSlider" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer/MusicUI/HBoxContainer"]
+margin_left = 115.0
+margin_right = 415.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 300, 20 )
+size_flags_vertical = 2
 theme = ExtResource( 1 )
 
 [node name="VSeparator" type="VSeparator" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
-margin_left = 485.0
-margin_right = 489.0
-margin_bottom = 70.0
+margin_left = 493.0
+margin_right = 497.0
+margin_bottom = 74.0
 theme = ExtResource( 1 )
 
 [node name="LPBLabel" type="Label" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
-margin_left = 493.0
-margin_top = 20.0
-margin_right = 532.0
-margin_bottom = 49.0
+margin_left = 501.0
+margin_top = 22.0
+margin_right = 540.0
+margin_bottom = 51.0
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "LPB"
@@ -216,10 +250,10 @@ __meta__ = {
 }
 
 [node name="LPB" type="SpinBox" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
-margin_left = 536.0
-margin_top = 24.0
-margin_right = 612.0
-margin_bottom = 46.0
+margin_left = 544.0
+margin_top = 22.0
+margin_right = 620.0
+margin_bottom = 51.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource( 1 )
@@ -229,10 +263,10 @@ __meta__ = {
 }
 
 [node name="BPMLabel" type="Label" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
-margin_left = 616.0
-margin_top = 20.0
-margin_right = 661.0
-margin_bottom = 49.0
+margin_left = 624.0
+margin_top = 22.0
+margin_right = 669.0
+margin_bottom = 51.0
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "BPM"
@@ -241,10 +275,10 @@ __meta__ = {
 }
 
 [node name="BPM" type="SpinBox" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
-margin_left = 665.0
-margin_top = 24.0
-margin_right = 741.0
-margin_bottom = 46.0
+margin_left = 673.0
+margin_top = 22.0
+margin_right = 749.0
+margin_bottom = 51.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource( 1 )
@@ -254,10 +288,10 @@ __meta__ = {
 }
 
 [node name="OffsetLabel" type="Label" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
-margin_left = 745.0
-margin_top = 20.0
-margin_right = 801.0
-margin_bottom = 49.0
+margin_left = 753.0
+margin_top = 22.0
+margin_right = 809.0
+margin_bottom = 51.0
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "Offset"
@@ -266,10 +300,10 @@ __meta__ = {
 }
 
 [node name="StartOffset" type="SpinBox" parent="Control/VBoxContainer/PlaybackControls/HBoxContainer"]
-margin_left = 805.0
-margin_top = 24.0
-margin_right = 881.0
-margin_bottom = 46.0
+margin_left = 813.0
+margin_top = 22.0
+margin_right = 889.0
+margin_bottom = 51.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource( 1 )
@@ -278,4 +312,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="MessageBox" type="Label" parent="Control/VBoxContainer"]
+margin_top = 571.0
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.109804, 1, 0.607843, 1 )
+text = "Blomstra Map Editor v 0.0.1"
+
+[node name="MusicLoader" type="CenterContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialog" type="FileDialog" parent="Control/MusicLoader"]
+margin_left = 262.0
+margin_top = 50.0
+margin_right = 762.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 500, 500 )
+theme = ExtResource( 1 )
+window_title = "Open a File"
+mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource( 12 )
+[connection signal="button_down" from="Control/VBoxContainer/ToolBar/HBoxContainer/Open" to="AudioPlayer" method="_on_Open_button_down"]
+[connection signal="button_down" from="Control/VBoxContainer/PlaybackControls/HBoxContainer/Play" to="Control/VBoxContainer/PlaybackControls/HBoxContainer/Play" method="_on_Play_button_down"]
+[connection signal="toggle_play_audio" from="Control/VBoxContainer/PlaybackControls/HBoxContainer/Play" to="AudioPlayer" method="_on_Play_toggle_play_audio"]
+[connection signal="file_selected" from="Control/MusicLoader/FileDialog" to="AudioPlayer" method="_on_FileDialog_file_selected"]
+[connection signal="update_song_meta" from="AudioPlayer" to="Control/VBoxContainer/PlaybackControls/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
