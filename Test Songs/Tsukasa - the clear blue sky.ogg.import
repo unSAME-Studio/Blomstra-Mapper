@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Tsukasa - the clear blue sky.ogg-286a568be68498dbc27
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

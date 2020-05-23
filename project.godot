@@ -16,11 +16,23 @@ _global_script_class_icons={
 [application]
 
 config/name="Bst Mapper"
-config/icon="res://icon.png"
+run/main_scene="res://Scenes/Editor.tscn"
+config/icon="res://Icon.PNG"
+
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom="res://Graphics/EditorTheme.tres"
+theme/custom_font="res://Graphics/Font/EditorFontSmall.tres"
 
 [rendering]
 
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+environment/default_clear_color=Color( 0.113725, 0.137255, 0.156863, 1 )
 environment/default_environment="res://default_env.tres"

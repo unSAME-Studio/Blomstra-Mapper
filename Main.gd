@@ -24,7 +24,7 @@ var dsptimesong: float
 var bpm: float
 
 # keep all the position-in-beats of notes in the song
-# note formar: (type, start, end, xloc, yloc)
+# note formar: (starting_time, type, end_time (Hold only, else 0), yloc (in screen percentage))
 
 
 
