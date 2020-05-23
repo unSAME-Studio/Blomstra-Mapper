@@ -3,17 +3,12 @@ extends AudioStreamPlayer
 # Signals
 signal update_song_meta
 
-
 # Nodes
 onready var file_dialog = get_node("../Control/MusicLoader/FileDialog")
+onready var music_ui = get_node("../Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI")
 
-# Music Loading
-var song_name:String
-var song_duration:float
-
-
-func _ready():
-	pass
+# Music Player
+var currentPosition = 0.0
 
 
 func load_audio_file(path):
@@ -25,18 +20,31 @@ func load_audio_file(path):
 		set_stream(audio_file)
 		
 		# Update Meta
-		song_name = path.get_file()
-		song_duration = get_stream().get_length()
+		SongTracker.songName = path.get_file()
+		SongTracker.songDuration = get_stream().get_length()
 		
-		emit_signal("update_song_meta", song_name, song_duration)
+		emit_signal("update_song_meta", SongTracker.songName, SongTracker.songDuration)
 
 
 func play_song():
-	play()
+	play(currentPosition)
+	SongTracker.songPlaying = true
 
 
 func stop_song():
 	stop()
+	SongTracker.songPlaying = false
+
+
+func _process(_delta):
+	currentPosition = get_playback_position()
+	
+	# Update the song tracker positions
+	SongTracker.update_positions(currentPosition)
+	
+	# Set Display Position
+	# Set Slider Position if playing
+	music_ui.set_song_position(currentPosition, is_playing())
 
 
 func _on_Open_button_down():
@@ -45,7 +53,6 @@ func _on_Open_button_down():
 
 func _on_FileDialog_file_selected(path):
 	load_audio_file(path)
-	pass
 
 
 func _on_Play_toggle_play_audio(play):
@@ -53,3 +60,22 @@ func _on_Play_toggle_play_audio(play):
 		play_song()
 	elif play == false:
 		stop_song()
+
+
+# Slider Control
+var resume_play = false
+
+func _on_TimeSlider_gui_input(event):
+		if event is InputEventMouseButton:
+			if event.is_pressed():
+				if SongTracker.songPlaying:
+					resume_play = true
+					stop_song()
+			else:
+				if resume_play == true:
+					resume_play = false
+					play_song()
+
+func _on_TimeSlider_value_changed(value):
+	if SongTracker.songPlaying == false:
+		seek(value)

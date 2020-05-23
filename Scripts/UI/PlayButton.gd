@@ -2,12 +2,20 @@ extends Button
 
 signal toggle_play_audio
 
-var play = false
+
+func reset():
+	set_text("Play")
+
 
 func _on_Play_button_down():
-	if play == false:
+	if SongTracker.songPlaying == false:
 		emit_signal("toggle_play_audio", true)
-		play = true
 	else:
 		emit_signal("toggle_play_audio", false)
-		play = false
+
+
+func _process(delta):
+	if SongTracker.songPlaying:
+		set_text("Pause")
+	else:
+		set_text("Play")

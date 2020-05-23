@@ -19,6 +19,10 @@ config/name="Bst Mapper"
 run/main_scene="res://Scenes/Editor.tscn"
 config/icon="res://Icon.PNG"
 
+[autoload]
+
+SongTracker="*res://Scripts/SongTracker.gd"
+
 [display]
 
 window/stretch/mode="2d"
