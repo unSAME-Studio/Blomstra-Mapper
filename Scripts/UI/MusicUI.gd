@@ -21,6 +21,7 @@ func reset_ui():
 
 
 func set_song_position(sec):
+	# warning-ignore:integer_division
 	position_min = int(sec) / 60 % 60
 	position_sec = int(sec) % 60
 	$HBoxContainer/SongPosition.set_text("%02d:%02d" % [position_min, position_sec])
@@ -34,6 +35,7 @@ func _on_AudioPlayer_update_song_meta(name, duration):
 	
 	$SongName.set_text(name)
 	
+	# warning-ignore:integer_division
 	duration_min = int(duration) / 60 % 60
 	duration_sec = int(duration) % 60
 	$HBoxContainer/SongDuration.set_text("/ %02d:%02d" % [duration_min, duration_sec])

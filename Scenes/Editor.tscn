@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Graphics/EditorTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Graphics/Font/EditorFontSmall.tres" type="DynamicFont" id=2]
@@ -16,6 +16,9 @@
 [ext_resource path="res://Scripts/UI/PlayButton.gd" type="Script" id=14]
 [ext_resource path="res://Scripts/UI/MessageBox.gd" type="Script" id=15]
 [ext_resource path="res://Scripts/UI/BPM.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/NoteCanvas/NoteCanvas.gd" type="Script" id=17]
+[ext_resource path="res://Scripts/UI/ZoomSlider.gd" type="Script" id=18]
+[ext_resource path="res://Scripts/NoteCanvas/WaveformRender.gd" type="Script" id=19]
 
 [sub_resource type="InputEventAction" id=1]
 action = "music_playpause"
@@ -47,7 +50,7 @@ __meta__ = {
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 1275.0
-margin_bottom = 715.0
+margin_bottom = 895.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -201,24 +204,32 @@ icon = ExtResource( 11 )
 expand_icon = true
 
 [node name="ViewportContainer" type="ViewportContainer" parent="Control/MarginContainer/VBoxContainer"]
+show_behind_parent = true
 margin_top = 54.0
 margin_right = 1270.0
-margin_bottom = 585.0
+margin_bottom = 765.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
+stretch = true
 
 [node name="Viewport" type="Viewport" parent="Control/MarginContainer/VBoxContainer/ViewportContainer"]
+size = Vector2( 1270, 711 )
 handle_input_locally = false
+msaa = 2
 disable_3d = true
+usage = 0
 render_target_update_mode = 3
 
+[node name="NoteCanvas" type="Node2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport"]
+script = ExtResource( 17 )
+
+[node name="WaveformRender" type="Node2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport"]
+script = ExtResource( 19 )
+
 [node name="PlaybackControls" type="Panel" parent="Control/MarginContainer/VBoxContainer"]
-margin_top = 589.0
+margin_top = 769.0
 margin_right = 1270.0
-margin_bottom = 671.0
+margin_bottom = 851.0
 rect_min_size = Vector2( 0, 82 )
 custom_styles/panel = ExtResource( 4 )
 
@@ -457,17 +468,18 @@ margin_bottom = 35.0
 rect_min_size = Vector2( 70, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-max_value = 1.0
+max_value = 2.0
 step = 0.01
-value = 0.5
+value = 1.0
+script = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer"]
-margin_top = 675.0
+margin_top = 855.0
 margin_right = 1270.0
-margin_bottom = 710.0
+margin_bottom = 890.0
 custom_constants/margin_right = 3
 custom_constants/margin_top = 3
 custom_constants/margin_left = 10
@@ -496,9 +508,9 @@ __meta__ = {
 
 [node name="FileDialog" type="FileDialog" parent="Control/MusicLoader"]
 margin_left = 390.0
-margin_top = 110.0
+margin_top = 200.0
 margin_right = 890.0
-margin_bottom = 610.0
+margin_bottom = 700.0
 rect_min_size = Vector2( 500, 500 )
 theme = ExtResource( 1 )
 window_title = "Open a File"
@@ -511,12 +523,16 @@ __meta__ = {
 volume_db = -25.0
 script = ExtResource( 12 )
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Open" to="AudioStreamPlayer" method="_on_Open_button_down"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Meta" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/WaveformRender" method="_on_Meta_pressed"]
+[connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_entered"]
+[connection signal="mouse_exited" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_exited"]
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" method="_on_Play_button_down"]
 [connection signal="toggle_play_audio" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" to="AudioStreamPlayer" method="_on_Play_toggle_play_audio"]
 [connection signal="gui_input" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer/TimeSlider" to="AudioStreamPlayer" method="_on_TimeSlider_gui_input"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer/TimeSlider" to="AudioStreamPlayer" method="_on_TimeSlider_value_changed"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SongSettings/BPM" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SongSettings/BPM" method="_on_BPM_value_changed"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/VolumeSlider" to="AudioStreamPlayer" method="_on_VolumeSlider_value_changed"]
+[connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" method="_on_ZoomSlider_value_changed"]
 [connection signal="file_selected" from="Control/MusicLoader/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
