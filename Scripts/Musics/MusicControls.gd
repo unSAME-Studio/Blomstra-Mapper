@@ -44,7 +44,7 @@ func _process(_delta):
 	
 	# Set Display Position
 	# Set Slider Position if playing
-	music_ui.set_song_position(currentPosition, is_playing())
+	music_ui.set_song_position(currentPosition)
 
 
 func _on_Open_button_down():
@@ -79,3 +79,9 @@ func _on_TimeSlider_gui_input(event):
 func _on_TimeSlider_value_changed(value):
 	if SongTracker.songPlaying == false:
 		seek(value)
+		currentPosition = value
+
+
+# Volume Slider
+func _on_VolumeSlider_value_changed(value):
+	set_volume_db(value - 50)
