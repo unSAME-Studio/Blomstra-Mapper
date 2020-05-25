@@ -468,6 +468,7 @@ margin_bottom = 35.0
 rect_min_size = Vector2( 70, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+min_value = 0.01
 max_value = 2.0
 step = 0.01
 value = 1.0
@@ -524,6 +525,7 @@ volume_db = -25.0
 script = ExtResource( 12 )
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Open" to="AudioStreamPlayer" method="_on_Open_button_down"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Meta" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/WaveformRender" method="_on_Meta_pressed"]
+[connection signal="gui_input" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_gui_input"]
 [connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_entered"]
 [connection signal="mouse_exited" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_exited"]
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" method="_on_Play_button_down"]
@@ -534,5 +536,5 @@ script = ExtResource( 12 )
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/VolumeSlider" to="AudioStreamPlayer" method="_on_VolumeSlider_value_changed"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" method="_on_ZoomSlider_value_changed"]
 [connection signal="file_selected" from="Control/MusicLoader/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
