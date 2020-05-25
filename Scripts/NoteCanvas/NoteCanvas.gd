@@ -8,33 +8,42 @@ var mouseEntered = false
 var blockLines = []
 var beatLines = []
 
-var snappingThreshold = 23.0
+var snappingThreshold = 25.0
 
-var selectedBlock = 0
-var selectedBeat = 0
+var ClosestNotePosition = Vector2(0, 0)
 
 
 func _ready():
 	viewportRect = get_viewport_rect()
 	
 	# Calculate Block Lines
-	for i in range(1, 10):
-		var blockYPos: float = viewportRect.size.y * 0.8 * (float(i) / 10.0)
+	for i in range(1, EditorDatas.maxBlock + 1):
+		var blockYPos: float = viewportRect.size.y * 0.8 * (float(i) / float(EditorDatas.maxBlock + 1))
 		blockLines.append([viewportRect.size.x, blockYPos, Color("2e3840"), 2])
 
 
 func _process(_delta):
+	# Reset the block line color
+	for line in blockLines:
+		line[2] = Color("2e3840")
 	
 	if (mouseEntered):
 		
 		var mousePos = get_viewport().get_mouse_position()
 		
-		for i in range(blockLines.size()):
-			if abs(blockLines[i][1] - mousePos.y) < snappingThreshold:
-				blockLines[i][2] = Color("1cff9b")
-				selectedBlock = i + 1
-			else:
-				blockLines[i][2] = Color("2e3840")
+		var closestLineIndex = 0
+		var closestBlockLindex = GetClosestLineIndex(blockLines, mousePos.y)
+		
+		var distance = Vector2(mousePos.x, blockLines[closestBlockLindex][1]) - mousePos
+		
+		if  distance.x < snappingThreshold and distance.y < snappingThreshold:
+			
+			blockLines[closestBlockLindex][2] = Color("1cff9b")
+			ClosestNotePosition = Vector2(0, closestBlockLindex + 1)
+			
+		else:
+			
+			ClosestNotePosition = Vector2(0, 0)
 			
 			
 		update()
@@ -56,6 +65,20 @@ func _draw():
 		Color("ffffff"), 2)
 
 
+func GetClosestLineIndex(lines: Array, mouse_pos: float):
+	var best_match = null
+	var least_diff = 1000
+	
+	for i in range(lines.size()):
+		var diff = abs(lines[i][1] - mouse_pos)
+		
+		if diff <= least_diff:
+			best_match = i
+			least_diff = diff
+	
+	return best_match
+
+
 # Capture mouse when entered
 func _on_ViewportContainer_mouse_entered():
 	mouseEntered = true
@@ -68,5 +91,5 @@ func _on_ViewportContainer_mouse_exited():
 func _on_ViewportContainer_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			print(selectedBlock, selectedBeat)
+			print(ClosestNotePosition)
 		

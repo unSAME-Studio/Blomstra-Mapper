@@ -536,5 +536,5 @@ script = ExtResource( 12 )
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/VolumeSlider" to="AudioStreamPlayer" method="_on_VolumeSlider_value_changed"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" method="_on_ZoomSlider_value_changed"]
 [connection signal="file_selected" from="Control/MusicLoader/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
