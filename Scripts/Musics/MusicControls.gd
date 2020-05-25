@@ -78,8 +78,20 @@ func _on_TimeSlider_gui_input(event):
 
 func _on_TimeSlider_value_changed(value):
 	if SongTracker.songPlaying == false:
-		seek(value)
 		currentPosition = value
+		seek(currentPosition)
+
+
+# Mouse Wheels Control
+var scroll_delta = 1
+
+func _input(event):
+	if event.is_action_pressed("timeline_left"):
+		currentPosition -= scroll_delta
+		seek(currentPosition)
+	elif event.is_action_pressed("timeline_right"):
+		currentPosition += scroll_delta
+		seek(currentPosition)
 
 
 # Volume Slider
