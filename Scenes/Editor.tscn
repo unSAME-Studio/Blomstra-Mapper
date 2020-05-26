@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Graphics/EditorTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Graphics/Font/EditorFontSmall.tres" type="DynamicFont" id=2]
@@ -27,6 +27,8 @@
 [ext_resource path="res://Graphics/Icons/Metadata.png" type="Texture" id=25]
 [ext_resource path="res://Graphics/Icons/Settings.png" type="Texture" id=26]
 [ext_resource path="res://Graphics/Icons/Infos.png" type="Texture" id=27]
+
+[sub_resource type="ButtonGroup" id=3]
 
 [sub_resource type="InputEventAction" id=1]
 action = "music_playpause"
@@ -101,6 +103,7 @@ custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
 pressed = true
+group = SubResource( 3 )
 icon = ExtResource( 5 )
 expand_icon = true
 
@@ -116,6 +119,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
+group = SubResource( 3 )
 icon = ExtResource( 7 )
 expand_icon = true
 
@@ -131,6 +135,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
+group = SubResource( 3 )
 icon = ExtResource( 6 )
 expand_icon = true
 
@@ -146,6 +151,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
+group = SubResource( 3 )
 icon = ExtResource( 9 )
 expand_icon = true
 

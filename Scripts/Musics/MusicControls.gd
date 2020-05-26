@@ -7,6 +7,7 @@ signal song_loaded
 # Nodes
 onready var file_dialog = get_node("../Control/Popups/FileDialog")
 onready var music_ui = get_node("../Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI")
+onready var tween = get_node("../Tween")
 
 # Music Player
 var currentPosition = 0.0
