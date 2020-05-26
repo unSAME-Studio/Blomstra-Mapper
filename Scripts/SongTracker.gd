@@ -4,6 +4,9 @@ extends Node
 # Position Tracking
 ###################
 
+# Check if song is loaded
+var songLoaded = false
+
 # the current state of song playing
 var songPlaying = false
 

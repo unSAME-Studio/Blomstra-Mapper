@@ -17,12 +17,14 @@ _global_script_class_icons={
 
 config/name="Bst Mapper"
 run/main_scene="res://Scenes/Editor.tscn"
+run/low_processor_mode=true
 config/icon="res://Icon.PNG"
 
 [autoload]
 
 SongTracker="*res://Scripts/SongTracker.gd"
 EditorDatas="*res://Scripts/EditorDatas.gd"
+Convertion="*res://Scripts/Utility/Convertion.gd"
 
 [display]
 

@@ -8,10 +8,11 @@ func reset():
 
 
 func _on_Play_button_down():
-	if SongTracker.songPlaying == false:
-		emit_signal("toggle_play_audio", true)
-	else:
-		emit_signal("toggle_play_audio", false)
+	if SongTracker.songLoaded == true:
+		if SongTracker.songPlaying == false:
+			emit_signal("toggle_play_audio", true)
+		else:
+			emit_signal("toggle_play_audio", false)
 
 
 func _process(delta):

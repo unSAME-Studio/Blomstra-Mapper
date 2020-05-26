@@ -23,46 +23,51 @@ func _ready():
 
 
 func _process(_delta):
-	# Reset the block line color
-	for line in blockLines:
-		line[2] = Color("2e3840")
 	
-	if (mouseEntered):
+	if SongTracker.songLoaded == true:
 		
-		var mousePos = get_viewport().get_mouse_position()
+		# Reset the block line color
+		for line in blockLines:
+			line[2] = Color("2e3840")
 		
-		var closestLineIndex = 0
-		var closestBlockLindex = GetClosestLineIndex(blockLines, mousePos.y)
-		
-		var distance = Vector2(mousePos.x, blockLines[closestBlockLindex][1]) - mousePos
-		
-		if  distance.x < snappingThreshold and distance.y < snappingThreshold:
+		if (mouseEntered):
 			
-			blockLines[closestBlockLindex][2] = Color("1cff9b")
-			ClosestNotePosition = Vector2(0, closestBlockLindex + 1)
+			var mousePos = get_viewport().get_mouse_position()
 			
-		else:
+			var closestLineIndex = 0
+			var closestBlockLindex = GetClosestLineIndex(blockLines, mousePos.y)
 			
-			ClosestNotePosition = Vector2(0, 0)
+			var distance = (Vector2(mousePos.x, blockLines[closestBlockLindex][1]) - mousePos).abs()
 			
-			
-		update()
+			if  distance.x < snappingThreshold and distance.y < snappingThreshold:
+				
+				blockLines[closestBlockLindex][2] = Color("1cff9b")
+				ClosestNotePosition = Vector2(0, closestBlockLindex + 1)
+				
+			else:
+				
+				ClosestNotePosition = Vector2(0, 0)
+				
+				
+			update()
 
 
 func _draw():
 	
-	# Draw Block Lines
-	for line in blockLines:
-		draw_line(
-			Vector2(0, line[1]), 
-			Vector2(line[0], line[1]), 
-			line[2], line[3])
+	if SongTracker.songLoaded == true:
 	
-	# Draw Judgement Line
-	draw_line(
-		Vector2(viewportRect.size.x * 0.1, 0), 
-		Vector2(viewportRect.size.x * 0.1, viewportRect.size.y),
-		Color("ffffff"), 2)
+		# Draw Block Lines
+		for line in blockLines:
+			draw_line(
+				Vector2(0, line[1]), 
+				Vector2(line[0], line[1]), 
+				line[2], line[3])
+		
+		# Draw Judgement Line
+		draw_line(
+			Vector2(viewportRect.size.x * 0.1, 0), 
+			Vector2(viewportRect.size.x * 0.1, viewportRect.size.y),
+			Color("ffffff"), 3)
 
 
 func GetClosestLineIndex(lines: Array, mouse_pos: float):

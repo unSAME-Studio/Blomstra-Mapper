@@ -22,6 +22,7 @@ func load_audio_file(path):
 		# Update Meta
 		SongTracker.songName = path.get_file()
 		SongTracker.songDuration = get_stream().get_length()
+		SongTracker.songLoaded = true
 		
 		emit_signal("update_song_meta", SongTracker.songName, SongTracker.songDuration)
 
