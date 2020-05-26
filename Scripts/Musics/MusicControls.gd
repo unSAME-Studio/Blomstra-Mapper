@@ -16,8 +16,8 @@ func load_audio_file(path):
 	# Load audio file into the player from a path
 	if path.get_extension() in ["ogg", "wav"]:
 		
-		var audio_file = load(path)
-		#audio_file.set_loop(false)
+		var audio_file = ResourceLoader.load(path)
+		# audio_file.set_loop(false)
 		set_stream(audio_file)
 		
 		SongTracker.AudioData = get_stream().get_data()

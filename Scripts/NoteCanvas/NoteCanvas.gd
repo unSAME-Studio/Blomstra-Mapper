@@ -27,7 +27,7 @@ func _ready():
 	EditorDatas.width = viewportRect.size.x
 	
 	# Set judgement line offset X
-	EditorDatas.offsetX = viewportRect.size.x * 0.1
+	EditorDatas.offsetX = viewportRect.size.x * 0.1 + 100
 	
 	calculate_beat_num()
 	calculate_block_lines()
@@ -58,10 +58,14 @@ func _process(_delta):
 			beatLines = []
 			for i in range(beatSamples.size()):
 				var x = Convertion.SamplesToCanvasPositionX(beatSamples[i], EditorDatas.width)
+				var beatInfo = BeatLineCalculations(i)
+				
 				beatLines.append([
 					Convertion.CanvasToScreenPosition(x, EditorDatas.width), 
-					viewportRect.size.y * BeatLineLengthFactor(i), 
-					BeatLineColor(i), 2])
+					viewportRect.size.y * 0.8 * beatInfo[1], 
+					beatInfo[0], 
+					2 * beatInfo[1], 
+					beatInfo[2]])
 			
 			cachedZeroSamplePosX = beatLines[0][0]
 			cachedCanvasWidth = EditorDatas.width
@@ -120,16 +124,15 @@ func _draw():
 				line[2], line[3])
 		
 		# Draw Beat Lines
-		for i in range(beatLines.size()):
-			var line = beatLines[i]
+		for line in beatLines:
 			draw_line(
 				Vector2(line[0], 0), 
 				Vector2(line[0], line[1]), 
 				line[2], line[3])
 			
-			if i % (EditorDatas.LPB * 4) == 0:
-				# Draw the number of line
-				draw_string(beatFont, Vector2(line[0], line[1] + 20), str(i / (EditorDatas.LPB * 4)))
+			# Draw the number for beat lines
+			if line[4] > -1:
+				draw_string(beatFont, Vector2(line[0], line[1] + 20), str(line[4]))
 		
 		# Draw Judgement Line
 		draw_line(
@@ -152,6 +155,16 @@ func GetClosestLineIndex(lines: Array, mouse_pos: float, index: int):
 	return best_match
 
 
+func BeatLineCalculations(beat: int):
+	# Calculate the color, beatline length, and display numbers
+	if beat % (EditorDatas.LPB * 4) == 0:
+		return [Color("7790a3"), 1.025, floor(beat / (EditorDatas.LPB * 4))]
+	elif beat % EditorDatas.LPB == 0:
+		return [Color("475662"), 1.05, -1]
+	else:
+		return [Color("2e3840"), 1, -1]
+
+
 func BeatLineColor(beat: int):
 	if beat % (EditorDatas.LPB * 4) == 0:
 		return Color("7790a3")
@@ -159,15 +172,6 @@ func BeatLineColor(beat: int):
 		return Color("475662")
 	else:
 		return Color("2e3840")
-
-
-func BeatLineLengthFactor(beat: int):
-	if beat % (EditorDatas.LPB * 4) == 0:
-		return 0.77
-	elif beat % EditorDatas.LPB == 0:
-		return 0.8
-	else:
-		return 0.75
 
 
 # Capture mouse when entered
