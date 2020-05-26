@@ -36,17 +36,26 @@ var songName = "No Name"
 
 var songDuration = 0.0
 
+var songFrequency = 44100.0
+
+var songSamples = 0.0
+
+# contain all the amplitude of the audio files
+var AudioData: PoolByteArray
+
 # keep all the position-in-beats of notes in the song
 # note formar: (starting_time, type, end_time (Hold only, else 0), yloc (in screen percentage))
-
-
-func _ready():
-	calculates()
 
 
 func calculates():
 	# calculate how many seconds is one beat
 	secPerBeat = 60.0 / bpm
+	
+	# calculate frequency from durations and AudioData
+	songFrequency = len(AudioData) / songDuration
+	
+	# calculate total length in samples
+	songSamples = len(AudioData)
 
 
 func update_positions(audio_position):

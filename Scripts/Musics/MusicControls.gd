@@ -2,6 +2,7 @@ extends AudioStreamPlayer
 
 # Signals
 signal update_song_meta
+signal song_loaded
 
 # Nodes
 onready var file_dialog = get_node("../Control/MusicLoader/FileDialog")
@@ -19,12 +20,22 @@ func load_audio_file(path):
 		#audio_file.set_loop(false)
 		set_stream(audio_file)
 		
+		SongTracker.AudioData = get_stream().get_data()
+		
 		# Update Meta
 		SongTracker.songName = path.get_file()
 		SongTracker.songDuration = get_stream().get_length()
-		SongTracker.songLoaded = true
+		
+		print("Song Length: ", SongTracker.songDuration)
+		print("songFrequency: ", SongTracker.songFrequency)
+		
+		SongTracker.calculates()
 		
 		emit_signal("update_song_meta", SongTracker.songName, SongTracker.songDuration)
+		emit_signal("song_loaded")
+		
+		SongTracker.songLoaded = true
+
 
 
 func play_song():
@@ -38,14 +49,17 @@ func stop_song():
 
 
 func _process(_delta):
-	currentPosition = get_playback_position()
 	
-	# Update the song tracker positions
-	SongTracker.update_positions(currentPosition)
-	
-	# Set Display Position
-	# Set Slider Position if playing
-	music_ui.set_song_position(currentPosition)
+	if SongTracker.songLoaded == true:
+		
+		currentPosition = get_playback_position()
+		
+		# Update the song tracker positions
+		SongTracker.update_positions(currentPosition)
+		
+		# Set Display Position
+		# Set Slider Position if playing
+		music_ui.set_song_position(currentPosition)
 
 
 func _on_Open_button_down():
@@ -84,7 +98,7 @@ func _on_TimeSlider_value_changed(value):
 
 
 # Mouse Wheels Control
-var scroll_delta = 1
+var scroll_delta = 0.6
 
 func _input(event):
 	if event.is_action_pressed("timeline_left"):
