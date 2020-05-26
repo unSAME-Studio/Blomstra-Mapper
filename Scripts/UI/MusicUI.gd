@@ -33,7 +33,7 @@ func set_song_position(sec):
 func _on_AudioPlayer_update_song_meta(name, duration):
 	reset_ui()
 	
-	$SongName.set_text(name)
+	$SongName.set_text(SongTracker.songName)
 	
 	# warning-ignore:integer_division
 	duration_min = int(duration) / 60 % 60
@@ -42,3 +42,7 @@ func _on_AudioPlayer_update_song_meta(name, duration):
 	
 	# Update Slider Max Value to Duration Sec
 	$HBoxContainer/TimeSlider.set_max(duration)
+
+
+func _on_Popups_meta_edited():
+	$SongName.set_text(SongTracker.songName)

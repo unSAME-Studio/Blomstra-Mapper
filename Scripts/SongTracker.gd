@@ -32,8 +32,6 @@ var firstBeatOffset = 0.0
 # beats per minute of a song
 var bpm = 120.0
 
-var songName = "No Name"
-
 var songDuration = 0.0
 
 var songFrequency = 44100.0
@@ -46,6 +44,22 @@ var AudioData: PoolByteArray
 # keep all the position-in-beats of notes in the song
 # note formar: (starting_time, type, end_time (Hold only, else 0), yloc (in screen percentage))
 
+
+# Meta Information
+###################
+
+var songName = "No Name"
+
+var songArtist = "No Artist"
+
+var mapCreator = "Blomstra Mapper"
+
+var mapDifficulty = "Normal"
+
+
+
+# Methods
+###################
 
 func calculates():
 	# calculate how many seconds is one beat

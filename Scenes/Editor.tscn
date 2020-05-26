@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Graphics/EditorTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Graphics/Font/EditorFontSmall.tres" type="DynamicFont" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Scripts/NoteCanvas/WaveformRender.gd" type="Script" id=19]
 [ext_resource path="res://Scripts/UI/LPB.gd" type="Script" id=20]
 [ext_resource path="res://Scripts/UI/StartOffset.gd" type="Script" id=21]
+[ext_resource path="res://Scripts/UI/Popups.gd" type="Script" id=22]
 
 [sub_resource type="InputEventAction" id=1]
 action = "music_playpause"
@@ -495,7 +496,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 min_value = 1.0
 max_value = 50.0
-step = 1.0
 value = 1.0
 script = ExtResource( 18 )
 __meta__ = {
@@ -524,15 +524,16 @@ custom_colors/font_color = Color( 0.109804, 1, 0.607843, 1 )
 text = "Blomstra Map Editor v 0.0.1"
 script = ExtResource( 15 )
 
-[node name="MusicLoader" type="CenterContainer" parent="Control"]
+[node name="Popups" type="CenterContainer" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FileDialog" type="FileDialog" parent="Control/MusicLoader"]
+[node name="FileDialog" type="FileDialog" parent="Control/Popups"]
 margin_left = 390.0
 margin_top = 200.0
 margin_right = 890.0
@@ -545,11 +546,105 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MetadataDialog" type="ConfirmationDialog" parent="Control/Popups"]
+margin_left = 390.0
+margin_top = 200.0
+margin_right = 890.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 500, 500 )
+theme = ExtResource( 1 )
+window_title = "Edit Metadata"
+
+[node name="GridContainer" type="GridContainer" parent="Control/Popups/MetadataDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -45.0
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_top = 39.0
+margin_right = 122.0
+margin_bottom = 68.0
+size_flags_vertical = 6
+text = "Song Name:"
+
+[node name="EditName" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_left = 126.0
+margin_top = 39.0
+margin_right = 484.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_top = 151.0
+margin_right = 122.0
+margin_bottom = 180.0
+size_flags_vertical = 6
+text = "Song Artist:"
+
+[node name="EditArtist" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_left = 126.0
+margin_top = 151.0
+margin_right = 484.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_top = 263.0
+margin_right = 122.0
+margin_bottom = 292.0
+size_flags_vertical = 6
+text = "Map Creator:"
+
+[node name="EditCreator" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_left = 126.0
+margin_top = 263.0
+margin_right = 484.0
+margin_bottom = 292.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_top = 375.0
+margin_right = 122.0
+margin_bottom = 404.0
+size_flags_vertical = 6
+text = "Song Difficulty:"
+
+[node name="EditDifficulty" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_left = 126.0
+margin_top = 375.0
+margin_right = 484.0
+margin_bottom = 404.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -25.0
 script = ExtResource( 12 )
-[connection signal="button_down" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Open" to="AudioStreamPlayer" method="_on_Open_button_down"]
-[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Meta" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/WaveformRender" method="_on_Meta_pressed"]
+[connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Waveform" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/WaveformRender" method="_on_Waveform_toggled"]
+[connection signal="button_down" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Open" to="Control/Popups" method="_on_Open_button_down"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Meta" to="Control/Popups" method="_on_Meta_pressed"]
 [connection signal="gui_input" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_gui_input"]
 [connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_entered"]
 [connection signal="mouse_exited" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_exited"]
@@ -564,7 +659,9 @@ script = ExtResource( 12 )
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SongSettings/StartOffset" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SongSettings/StartOffset" method="_on_StartOffset_value_changed"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/VolumeSlider" to="AudioStreamPlayer" method="_on_VolumeSlider_value_changed"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" method="_on_ZoomSlider_value_changed"]
-[connection signal="file_selected" from="Control/MusicLoader/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
+[connection signal="meta_edited" from="Control/Popups" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_Popups_meta_edited"]
+[connection signal="file_selected" from="Control/Popups/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
+[connection signal="confirmed" from="Control/Popups/MetadataDialog" to="Control/Popups" method="_on_MetadataDialog_confirmed"]
 [connection signal="song_loaded" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_AudioStreamPlayer_song_loaded"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]

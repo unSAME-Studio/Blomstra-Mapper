@@ -5,7 +5,7 @@ signal update_song_meta
 signal song_loaded
 
 # Nodes
-onready var file_dialog = get_node("../Control/MusicLoader/FileDialog")
+onready var file_dialog = get_node("../Control/Popups/FileDialog")
 onready var music_ui = get_node("../Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI")
 
 # Music Player
@@ -61,9 +61,6 @@ func _process(_delta):
 		# Set Slider Position if playing
 		music_ui.set_song_position(currentPosition)
 
-
-func _on_Open_button_down():
-	file_dialog.popup_centered()
 
 
 func _on_FileDialog_file_selected(path):

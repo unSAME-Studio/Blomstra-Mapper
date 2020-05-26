@@ -36,8 +36,12 @@ func _draw():
 				Color("1cff9b"), 2)
 
 
-# Testing Audio Data Drawing
-func _on_Meta_pressed():
-	print("Audio Datas Lenth: %d" % len(SongTracker.AudioData))
-	
-	update()
+func _on_Waveform_toggled(button_pressed):
+	if button_pressed == true:
+		show()
+		
+		print("Audio Datas Lenth: %d" % len(SongTracker.AudioData))
+		update()
+		
+	else:
+		hide()
