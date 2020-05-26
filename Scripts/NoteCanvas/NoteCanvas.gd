@@ -163,7 +163,7 @@ func BeatLineColor(beat: int):
 
 func BeatLineLengthFactor(beat: int):
 	if beat % (EditorDatas.LPB * 4) == 0:
-		return 0.75
+		return 0.77
 	elif beat % EditorDatas.LPB == 0:
 		return 0.8
 	else:
