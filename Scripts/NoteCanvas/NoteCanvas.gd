@@ -24,6 +24,7 @@ var beatFont = preload("res://Graphics/Font/BeatLineFont.tres")
 func _ready():
 	viewportRect = get_viewport_rect()
 	
+	EditorDatas.height = viewportRect.size.y * 0.75
 	EditorDatas.width = viewportRect.size.x
 	
 	# Set judgement line offset X
@@ -39,8 +40,9 @@ func calculate_beat_num():
 
 
 func calculate_block_lines():
+	# calculate all the block lines into an array
 	for i in range(1, EditorDatas.maxBlock + 1):
-		var blockYPos: float = viewportRect.size.y * 0.8 * (float(i) / float(EditorDatas.maxBlock + 1))
+		var blockYPos: float = EditorDatas.height * (float(i) / float(EditorDatas.maxBlock + 1))
 		blockLines.append([viewportRect.size.x, blockYPos, Color("2e3840"), 2])
 
 
@@ -50,6 +52,7 @@ func _process(_delta):
 		# Generate Beat Lines Array
 		if len(beatSamples) != beatNum or cachedCanvasWidth != EditorDatas.width:
 			
+			# Refresh and recalculate the array
 			beatSamples = []
 			for i in range(0, beatNum):
 				beatSamples.append((i * unitBeatSamples) / EditorDatas.LPB)
@@ -60,9 +63,11 @@ func _process(_delta):
 				var x = Convertion.SamplesToCanvasPositionX(beatSamples[i], EditorDatas.width)
 				var beatInfo = BeatLineCalculations(i)
 				
+				# Array Format:
+				# [xpos, ypos, color, line_thickness, display_number ]
 				beatLines.append([
 					Convertion.CanvasToScreenPosition(x, EditorDatas.width), 
-					viewportRect.size.y * 0.8 * beatInfo[1], 
+					EditorDatas.height * beatInfo[1], 
 					beatInfo[0], 
 					2 * beatInfo[1], 
 					beatInfo[2]])
@@ -72,6 +77,7 @@ func _process(_delta):
 				
 		else:
 			
+			# Change the x location and colors of each line in array
 			var currentX = Convertion.CanvasToScreenPosition(Vector2(1, 0) * Convertion.SamplesToCanvasPositionX(0, EditorDatas.width), viewportRect.size).x
 			var diffX = currentX - cachedZeroSamplePosX;
 			
@@ -107,9 +113,8 @@ func _process(_delta):
 				
 				ClosestNotePosition = Vector2(-1, -1)
 				
-	
-	
-	update()
+		
+		update()
 
 
 func _draw():
@@ -142,6 +147,7 @@ func _draw():
 
 
 func GetClosestLineIndex(lines: Array, mouse_pos: float, index: int):
+	# find the cloest distance line's index in array
 	var best_match = null
 	var least_diff = 1000
 	
@@ -166,6 +172,7 @@ func BeatLineCalculations(beat: int):
 
 
 func BeatLineColor(beat: int):
+	# Calculate the color from beat
 	if beat % (EditorDatas.LPB * 4) == 0:
 		return Color("7790a3")
 	elif beat % EditorDatas.LPB == 0:

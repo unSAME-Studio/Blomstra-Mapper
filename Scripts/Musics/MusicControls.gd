@@ -7,7 +7,6 @@ signal song_loaded
 # Nodes
 onready var file_dialog = get_node("../Control/Popups/FileDialog")
 onready var music_ui = get_node("../Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI")
-onready var tween = get_node("../Tween")
 
 # Music Player
 var currentPosition = 0.0
@@ -21,18 +20,22 @@ func load_audio_file(path):
 		# audio_file.set_loop(false)
 		set_stream(audio_file)
 		
+		# Update Audio Datas
 		SongTracker.AudioData = get_stream().get_data()
 		
 		# Update Meta
 		SongTracker.songName = path.get_file()
 		SongTracker.songDuration = get_stream().get_length()
-		
-		print("Song Length: ", SongTracker.songDuration)
-		print("songFrequency: ", SongTracker.songFrequency)
+		SongTracker.songFrequency = get_stream().get_mix_rate()
 		
 		SongTracker.calculates()
 		
-		emit_signal("update_song_meta", SongTracker.songName, SongTracker.songDuration)
+		print("Song Format:", get_stream().get_format())
+		print("Song Length: ", SongTracker.songDuration)
+		print("songFrequency: ", SongTracker.songFrequency)
+		print("Total Datas: ", len(SongTracker.AudioData))
+		
+		emit_signal("update_song_meta")
 		emit_signal("song_loaded")
 		
 		SongTracker.songLoaded = true

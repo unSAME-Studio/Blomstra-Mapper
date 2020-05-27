@@ -15,7 +15,7 @@ func _on_Play_button_down():
 			emit_signal("toggle_play_audio", false)
 
 
-func _process(delta):
+func _process(_delta):
 	if SongTracker.songPlaying:
 		set_text("Pause")
 	else:

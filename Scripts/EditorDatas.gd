@@ -7,7 +7,9 @@ extends Node
 # controls the zooming of the note canvas interface
 var scaleFactor = 25
 
-# controls the width of the editor viewport
+# controls the size of the note editor area
+var height = 0.0
+
 var width = 32000.0
 
 # control how many line in a beat

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Graphics/EditorTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Graphics/Font/EditorFontSmall.tres" type="DynamicFont" id=2]
@@ -27,14 +27,15 @@
 [ext_resource path="res://Graphics/Icons/Metadata.png" type="Texture" id=25]
 [ext_resource path="res://Graphics/Icons/Settings.png" type="Texture" id=26]
 [ext_resource path="res://Graphics/Icons/Infos.png" type="Texture" id=27]
+[ext_resource path="res://Sounds/ClapSound.wav" type="AudioStream" id=28]
 
-[sub_resource type="ButtonGroup" id=3]
+[sub_resource type="ButtonGroup" id=1]
 
-[sub_resource type="InputEventAction" id=1]
+[sub_resource type="InputEventAction" id=2]
 action = "music_playpause"
 
-[sub_resource type="ShortCut" id=2]
-shortcut = SubResource( 1 )
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
 
 [node name="Editor" type="Node"]
 
@@ -103,7 +104,7 @@ custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
 pressed = true
-group = SubResource( 3 )
+group = SubResource( 1 )
 icon = ExtResource( 5 )
 expand_icon = true
 
@@ -119,7 +120,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
-group = SubResource( 3 )
+group = SubResource( 1 )
 icon = ExtResource( 7 )
 expand_icon = true
 
@@ -135,7 +136,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
-group = SubResource( 3 )
+group = SubResource( 1 )
 icon = ExtResource( 6 )
 expand_icon = true
 
@@ -151,7 +152,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
-group = SubResource( 3 )
+group = SubResource( 1 )
 icon = ExtResource( 9 )
 expand_icon = true
 
@@ -354,7 +355,7 @@ size_flags_vertical = 4
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 2 )
+shortcut = SubResource( 3 )
 text = "Play"
 script = ExtResource( 14 )
 
@@ -386,6 +387,7 @@ __meta__ = {
 [node name="SongPosition" type="Label" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer"]
 margin_right = 52.0
 margin_bottom = 29.0
+size_flags_horizontal = 9
 size_flags_vertical = 6
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.521569, 0.521569, 0.521569, 1 )
@@ -576,8 +578,8 @@ margin_bottom = 35.0
 rect_min_size = Vector2( 70, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-min_value = 1.0
-max_value = 60.0
+min_value = 20.0
+max_value = 100.0
 step = 0.2
 value = 25.0
 script = ExtResource( 18 )
@@ -728,6 +730,9 @@ __meta__ = {
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -25.0
 script = ExtResource( 12 )
+
+[node name="SoundEffects" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 28 )
 [connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Waveform" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/WaveformRender" method="_on_Waveform_toggled"]
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Open" to="Control/Popups" method="_on_Open_button_down"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Meta" to="Control/Popups" method="_on_Meta_pressed"]
@@ -750,5 +755,5 @@ script = ExtResource( 12 )
 [connection signal="file_selected" from="Control/Popups/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
 [connection signal="confirmed" from="Control/Popups/MetadataDialog" to="Control/Popups" method="_on_MetadataDialog_confirmed"]
 [connection signal="song_loaded" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_AudioStreamPlayer_song_loaded"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
