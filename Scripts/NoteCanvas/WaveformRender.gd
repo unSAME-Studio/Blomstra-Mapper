@@ -1,20 +1,20 @@
 extends Node2D
 
-
 onready var viewportRect = get_viewport_rect()
 
 onready var sectionHeight = 0.3
 onready var sectionLocation = viewportRect.size.y * 0.9
-
 
 var samples = []
 
 var cachedCanvasWidth = 0.0
 var cachedTimeSamples = 0.0
 
+var display = true
+
 func _process(_delta):
 	
-	if SongTracker.songLoaded == true:
+	if SongTracker.songLoaded == true and display == true:
 		
 		if cachedCanvasWidth != EditorDatas.width or cachedTimeSamples != SongTracker.songPosInSample:
 			
@@ -42,7 +42,7 @@ func _process(_delta):
 
 func _draw():
 	
-	if SongTracker.songLoaded == true:
+	if SongTracker.songLoaded == true and display == true:
 		
 		for i in range(samples.size()):
 				
@@ -61,9 +61,12 @@ func _draw():
 func _on_Waveform_toggled(button_pressed):
 	if button_pressed == true:
 		show()
+		display = true
 		
 		print("Audio Datas Lenth: %d" % len(SongTracker.AudioData))
+		
 		update()
 		
 	else:
 		hide()
+		display = false
