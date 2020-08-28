@@ -554,7 +554,7 @@ rect_min_size = Vector2( 70, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 max_value = 50.0
-value = 25.0
+value = 35.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -627,8 +627,9 @@ theme = ExtResource( 1 )
 window_title = "Open a File"
 mode = 0
 access = 2
-current_dir = "D:/Godot win64/BST_Mapper"
-current_path = "D:/Godot win64/BST_Mapper/"
+filters = PoolStringArray( "*.ogg ; Vorbis", "*.wav ; Waveform", "*.mp3 ; NOT SUPPORTED" )
+current_dir = "/Godot win64/BST_Mapper"
+current_path = "/Godot win64/BST_Mapper/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -727,7 +728,7 @@ __meta__ = {
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -25.0
+volume_db = -15.0
 script = ExtResource( 12 )
 
 [node name="SoundEffects" type="AudioStreamPlayer" parent="."]

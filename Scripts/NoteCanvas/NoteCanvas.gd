@@ -94,7 +94,7 @@ func _process(_delta):
 			line[2] = Color("2e3840")
 		
 		# Highlight the selected blocks
-		if (mouseEntered):
+		if mouseEntered:
 			
 			var mousePos = get_viewport().get_mouse_position()
 			

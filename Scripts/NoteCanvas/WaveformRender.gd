@@ -10,11 +10,9 @@ var samples = []
 var cachedCanvasWidth = 0.0
 var cachedTimeSamples = 0.0
 
-var display = true
 
 func _process(_delta):
-	
-	if SongTracker.songLoaded == true and display == true:
+	if SongTracker.songLoaded and EditorDatas.showWaveform:
 		
 		if cachedCanvasWidth != EditorDatas.width or cachedTimeSamples != SongTracker.songPosInSample:
 			
@@ -41,8 +39,7 @@ func _process(_delta):
 
 
 func _draw():
-	
-	if SongTracker.songLoaded == true and display == true:
+	if SongTracker.songLoaded and EditorDatas.showWaveform:
 		
 		for i in range(samples.size()):
 				
@@ -59,14 +56,12 @@ func _draw():
 
 
 func _on_Waveform_toggled(button_pressed):
-	if button_pressed == true:
+	if button_pressed:
 		show()
-		display = true
+		set_process(true)
 		
 		print("Audio Datas Lenth: %d" % len(SongTracker.AudioData))
 		
-		update()
-		
 	else:
 		hide()
-		display = false
+		set_process(false)

@@ -4,6 +4,8 @@ extends AudioStreamPlayer
 signal update_song_meta
 signal song_loaded
 
+# For loading audio stream
+var audio_importer = preload("res://Scripts/GDScriptAudioImport.gd")
 # Nodes
 onready var file_dialog = get_node("../Control/Popups/FileDialog")
 onready var music_ui = get_node("../Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI")
@@ -14,32 +16,37 @@ var currentPosition = 0.0
 
 func load_audio_file(path):
 	# Load audio file into the player from a path
-	if path.get_extension() in ["ogg", "wav"]:
-		
-		var audio_file = ResourceLoader.load(path)
-		# audio_file.set_loop(false)
-		set_stream(audio_file)
-		
-		# Update Audio Datas
-		SongTracker.AudioData = get_stream().get_data()
-		
-		# Update Meta
-		SongTracker.songName = path.get_file()
-		SongTracker.songDuration = get_stream().get_length()
-		SongTracker.songFrequency = get_stream().get_mix_rate()
-		
-		SongTracker.calculates()
-		
-		print("Song Format:", get_stream().get_format())
-		print("Song Length: ", SongTracker.songDuration)
-		print("songFrequency: ", SongTracker.songFrequency)
-		print("Total Datas: ", len(SongTracker.AudioData))
-		
-		emit_signal("update_song_meta")
-		emit_signal("song_loaded")
-		
-		SongTracker.songLoaded = true
-
+	match path.get_extension():
+		"ogg":
+			var importer = audio_importer.new()
+			var audio_stream = importer.loadfile(path)
+			set_stream(audio_stream)
+			
+			# Update Audio Datas
+			SongTracker.AudioData = get_stream().get_data()
+			SongTracker.AudioType = SongTracker.TYPES.OGG
+			
+			# Update Meta
+			SongTracker.songName = path.get_file()
+			SongTracker.songDuration = get_stream().get_length()
+			
+			SongTracker.calculates()
+			
+			# print("Song Format:", get_stream().get_format())
+			print("Song Length: ", SongTracker.songDuration)
+			print("songFrequency: ", SongTracker.songFrequency)
+			print("Total Datas: ", len(SongTracker.AudioData))
+			
+			emit_signal("update_song_meta")
+			emit_signal("song_loaded")
+			
+			SongTracker.songLoaded = true
+			
+		"wav":
+			pass
+			
+		"mp3":
+			pass
 
 
 func play_song():

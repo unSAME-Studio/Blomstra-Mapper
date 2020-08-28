@@ -44,6 +44,9 @@ var songSamples = 0.0
 # contain all the amplitude of the audio files
 var AudioData: PoolByteArray
 
+# set what type of audio for decoding
+enum TYPES {OGG, WAV, MP3}
+var AudioType = TYPES.OGG
 
 # keep all the position-in-beats of notes in the song
 # note formar: (starting_time, type, end_time (Hold only, else 0), yloc (in screen percentage))
@@ -70,7 +73,10 @@ func calculates():
 	secPerBeat = 60.0 / bpm
 	
 	# calculate total length in samples
-	songSamples = len(AudioData)
+	songSamples = AudioData.size()
+	
+	# calculate frequency from durations and AudioData
+	songFrequency = AudioData.size() / songDuration
 
 
 func update_positions(audio_position):
