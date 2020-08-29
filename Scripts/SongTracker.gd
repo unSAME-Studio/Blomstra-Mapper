@@ -49,7 +49,9 @@ enum TYPES {OGG, WAV, MP3}
 var AudioType = TYPES.OGG
 
 # keep all the position-in-beats of notes in the song
-# note formar: (starting_time, type, end_time (Hold only, else 0), yloc (in screen percentage))
+# old note formar: (starting_time, type, end_time (Hold only, else 0), yloc (in screen percentage))
+# new format: "position index": {type, endTime, yIndex}
+var notesDatas = {}
 
 
 # Meta Information
@@ -68,7 +70,7 @@ var mapDifficulty = "Normal"
 # Methods
 ###################
 
-func calculates():
+func calculates() -> void:
 	# calculate how many seconds is one beat
 	secPerBeat = 60.0 / bpm
 	
@@ -79,10 +81,31 @@ func calculates():
 	songFrequency = AudioData.size() / songDuration
 
 
-func update_positions(audio_position):
+func update_positions(audio_position) -> void:
 	# determine how many seconds since the song started
 	songPosition = audio_position - dspSongTime - firstBeatOffset
 	
 	# determine how many samples since the song started
 	songPosInSample = int(SongTracker.songPosition * SongTracker.songFrequency)
-	
+
+
+func add_note(selectedPos: Vector2) -> void:
+	if selectedPos != Vector2(-1, -1):
+		var key = "%d:%d" % [selectedPos.x, selectedPos.y]
+		
+		# init nested dict
+		notesDatas[key] = {}
+		
+		notesDatas[key]["type"] = EditorDatas.currentType
+		notesDatas[key]["endTime"] = 0
+
+
+func remove_note(selectedPos: Vector2) -> bool:
+	if selectedPos != Vector2(-1, -1):
+		var key = "%d:%d" % [selectedPos.x, selectedPos.y]
+		
+		if notesDatas.has(key):
+			notesDatas.erase(key)
+			return true
+			
+	return false

@@ -266,7 +266,7 @@ margin_left = 926.0
 margin_right = 966.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 0 )
-hint_tooltip = "See map's infos"
+hint_tooltip = "See Map's Infos"
 size_flags_horizontal = 9
 size_flags_vertical = 3
 theme = ExtResource( 1 )
@@ -314,6 +314,17 @@ render_target_update_mode = 3
 
 [node name="NoteCanvas" type="Node2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport"]
 script = ExtResource( 17 )
+
+[node name="BlockLines" type="Node2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas"]
+
+[node name="JudgeLine" type="Line2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas"]
+points = PoolVector2Array( 0, 0, 0, 200 )
+width = 3.0
+default_color = Color( 1, 1, 1, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 4
 
 [node name="WaveformRender" type="Node2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport"]
 script = ExtResource( 19 )
@@ -578,7 +589,7 @@ margin_bottom = 35.0
 rect_min_size = Vector2( 70, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-min_value = 20.0
+min_value = 1.0
 step = 0.2
 value = 25.0
 script = ExtResource( 18 )
@@ -755,5 +766,5 @@ stream = ExtResource( 28 )
 [connection signal="file_selected" from="Control/Popups/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
 [connection signal="confirmed" from="Control/Popups/MetadataDialog" to="Control/Popups" method="_on_MetadataDialog_confirmed"]
 [connection signal="song_loaded" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_AudioStreamPlayer_song_loaded"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]

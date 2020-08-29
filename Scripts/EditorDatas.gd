@@ -4,6 +4,10 @@ extends Node
 # Note Canvas Infos
 ###################
 
+# current selected note type
+enum NOTE_TYPE {TAP, HOLD, SLIDE, EFFECT}
+var currentType = NOTE_TYPE.TAP
+
 # controls the zooming of the note canvas interface
 var scaleFactor = 25
 

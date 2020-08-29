@@ -20,6 +20,8 @@ var ClosestNotePosition = Vector2(-1, -1)
 
 var beatFont = preload("res://Graphics/Font/BeatLineFont.tres")
 
+var line2d = preload("res://Scenes/Line2D.tscn")
+
 
 func _ready():
 	viewportRect = get_viewport_rect()
@@ -29,9 +31,15 @@ func _ready():
 	
 	# Set judgement line offset X
 	EditorDatas.offsetX = viewportRect.size.x * 0.1 + 100
+
+
+func reset_canvas():
+	remove_all_lines()
 	
 	calculate_beat_num()
 	calculate_block_lines()
+	
+	add_all_lines()
 
 
 func calculate_beat_num():
@@ -44,6 +52,24 @@ func calculate_block_lines():
 	for i in range(1, EditorDatas.maxBlock + 1):
 		var blockYPos: float = EditorDatas.height * (float(i) / float(EditorDatas.maxBlock + 1))
 		blockLines.append([viewportRect.size.x, blockYPos, Color("2e3840"), 2])
+
+
+func add_all_lines():
+	# add Block Lines
+	for i in range(blockLines.size()):
+		var l = line2d.instance()
+		l.array_ref = blockLines
+		l.index = i
+		$BlockLines.add_child(l)
+	
+	# update judge line
+	$JudgeLine.set_point_position(0, Vector2(EditorDatas.offsetX, 0))
+	$JudgeLine.set_point_position(1, Vector2(EditorDatas.offsetX, viewportRect.size.y))
+
+
+func remove_all_lines():
+	for i in $BlockLines.get_children():
+		i.queue_free()
 
 
 func _process(_delta):
@@ -64,7 +90,7 @@ func _process(_delta):
 				var beatInfo = BeatLineCalculations(i)
 				
 				# Array Format:
-				# [xpos, ypos, color, line_thickness, display_number ]
+				# [xpos, ypos, color, line_thickness, display_number]
 				beatLines.append([
 					Convertion.CanvasToScreenPosition(x, EditorDatas.width), 
 					EditorDatas.height * beatInfo[1], 
@@ -120,13 +146,6 @@ func _process(_delta):
 func _draw():
 	
 	if SongTracker.songLoaded == true:
-	
-		# Draw Block Lines
-		for line in blockLines:
-			draw_line(
-				Vector2(0, line[1]), 
-				Vector2(line[0], line[1]), 
-				line[2], line[3])
 		
 		# Draw Beat Lines
 		for line in beatLines:
@@ -138,12 +157,6 @@ func _draw():
 			# Draw the number for beat lines
 			if line[4] > -1:
 				draw_string(beatFont, Vector2(line[0], line[1] + 20), str(line[4]))
-		
-		# Draw Judgement Line
-		draw_line(
-			Vector2(EditorDatas.offsetX, 0), 
-			Vector2(EditorDatas.offsetX, viewportRect.size.y),
-			Color("ffffff"), 3)
 
 
 func GetClosestLineIndex(lines: Array, mouse_pos: float, index: int):
@@ -189,16 +202,19 @@ func _on_ViewportContainer_mouse_exited():
 	mouseEntered = false
 
 
-# Detect click events
+# Detect click events and add notes
 func _on_ViewportContainer_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			print(ClosestNotePosition)
+			if event.get_button_index() == BUTTON_LEFT:
+				SongTracker.add_note(ClosestNotePosition)
+			elif event.get_button_index() == BUTTON_RIGHT:
+				SongTracker.remove_note(ClosestNotePosition)
 
 
 # Recalculate Canvas when song loaded
 func _on_AudioStreamPlayer_song_loaded():
-	calculate_beat_num()
+	reset_canvas()
 
 
 func _on_BPM_bpm_updated():
