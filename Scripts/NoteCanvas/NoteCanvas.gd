@@ -22,6 +22,8 @@ var beatFont = preload("res://Graphics/Font/BeatLineFont.tres")
 
 var line2d = preload("res://Scenes/Line2D.tscn")
 
+var note = preload("res://Scenes/Note.tscn")
+
 
 func _ready():
 	viewportRect = get_viewport_rect()
@@ -159,7 +161,30 @@ func _draw():
 				draw_string(beatFont, Vector2(line[0], line[1] + 20), str(line[4]))
 
 
-func GetClosestLineIndex(lines: Array, mouse_pos: float, index: int):
+func add_notes(selectedPos: Vector2):
+	var n = note.instance()
+	n.beatArray = beatLines
+	n.blockArray = blockLines
+	n.xIndex = selectedPos.x
+	n.yIndex = selectedPos.y
+	$Notes.add_child(n)
+	
+	pass
+	"""
+	# Draw Notes
+	match type:
+		EditorDatas.NOTE_TYPE.TAP:
+			pass
+		EditorDatas.NOTE_TYPE.HOLD:
+			pass
+		EditorDatas.NOTE_TYPE.SLIDE:
+			pass
+		EditorDatas.NOTE_TYPE.EFFECT:
+			pass
+	"""
+
+
+func GetClosestLineIndex(lines: Array, mouse_pos: float, index: int) -> Vector2:
 	# find the cloest distance line's index in array
 	var best_match = null
 	var least_diff = 1000
@@ -208,6 +233,7 @@ func _on_ViewportContainer_gui_input(event):
 		if event.is_pressed():
 			if event.get_button_index() == BUTTON_LEFT:
 				SongTracker.add_note(ClosestNotePosition)
+				add_notes(ClosestNotePosition)
 			elif event.get_button_index() == BUTTON_RIGHT:
 				SongTracker.remove_note(ClosestNotePosition)
 

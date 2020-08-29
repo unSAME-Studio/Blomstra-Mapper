@@ -317,8 +317,10 @@ script = ExtResource( 17 )
 
 [node name="BlockLines" type="Node2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas"]
 
+[node name="Notes" type="Node2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas"]
+
 [node name="JudgeLine" type="Line2D" parent="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas"]
-points = PoolVector2Array( 0, 0, 0, 200 )
+points = PoolVector2Array( 0, 0, 0, 0 )
 width = 3.0
 default_color = Color( 1, 1, 1, 1 )
 joint_mode = 2
@@ -766,5 +768,5 @@ stream = ExtResource( 28 )
 [connection signal="file_selected" from="Control/Popups/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
 [connection signal="confirmed" from="Control/Popups/MetadataDialog" to="Control/Popups" method="_on_MetadataDialog_confirmed"]
 [connection signal="song_loaded" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_AudioStreamPlayer_song_loaded"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
