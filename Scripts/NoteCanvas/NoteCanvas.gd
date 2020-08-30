@@ -164,7 +164,13 @@ func _draw():
 		for key in SongTracker.notesDatas.keys():
 			var index = key.split(":")
 			var rect = Rect2(beatLines[int(index[0])][0] - 10, blockLines[int(index[1])][1] - 10, 20, 20)
-			draw_rect(rect, Color("1cff9b"), false, 4)
+			
+			# Change color
+			var color = Color("5ED2E0")
+			if int(index[2]) == EditorDatas.SIDE.RIGHT:
+				color = Color("4BE048")
+			
+			draw_rect(rect, color, false, 4)
 
 
 func add_notes(selectedPos: Vector2):
