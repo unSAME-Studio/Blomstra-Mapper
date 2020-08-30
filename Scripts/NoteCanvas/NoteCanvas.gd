@@ -159,6 +159,12 @@ func _draw():
 			# Draw the number for beat lines
 			if line[4] > -1:
 				draw_string(beatFont, Vector2(line[0], line[1] + 20), str(line[4]))
+		
+		# Draw all notes
+		for key in SongTracker.notesDatas.keys():
+			var index = key.split(":")
+			var rect = Rect2(beatLines[int(index[0])][0] - 10, blockLines[int(index[1])][1] - 10, 20, 20)
+			draw_rect(rect, Color("1cff9b"), false, 4)
 
 
 func add_notes(selectedPos: Vector2):
@@ -233,7 +239,6 @@ func _on_ViewportContainer_gui_input(event):
 		if event.is_pressed():
 			if event.get_button_index() == BUTTON_LEFT:
 				SongTracker.add_note(ClosestNotePosition)
-				add_notes(ClosestNotePosition)
 			elif event.get_button_index() == BUTTON_RIGHT:
 				SongTracker.remove_note(ClosestNotePosition)
 

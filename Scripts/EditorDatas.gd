@@ -8,6 +8,10 @@ extends Node
 enum NOTE_TYPE {TAP, HOLD, SLIDE, EFFECT}
 var currentType = NOTE_TYPE.TAP
 
+# current selected note side
+enum SIDE {LEFT, RIGHT}
+var currentSide = SIDE.LEFT
+
 # controls the zooming of the note canvas interface
 var scaleFactor = 25
 

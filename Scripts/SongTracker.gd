@@ -91,18 +91,20 @@ func update_positions(audio_position) -> void:
 
 func add_note(selectedPos: Vector2) -> void:
 	if selectedPos != Vector2(-1, -1):
-		var key = "%d:%d" % [selectedPos.x, selectedPos.y]
+		var key = "%d:%d:%d" % [selectedPos.x, selectedPos.y, EditorDatas.currentSide]
 		
 		# init nested dict
 		notesDatas[key] = {}
 		
 		notesDatas[key]["type"] = EditorDatas.currentType
 		notesDatas[key]["endTime"] = 0
+		
+		print(notesDatas)
 
 
 func remove_note(selectedPos: Vector2) -> bool:
 	if selectedPos != Vector2(-1, -1):
-		var key = "%d:%d" % [selectedPos.x, selectedPos.y]
+		var key = "%d:%d:%d" % [selectedPos.x, selectedPos.y, EditorDatas.currentSide]
 		
 		if notesDatas.has(key):
 			notesDatas.erase(key)
