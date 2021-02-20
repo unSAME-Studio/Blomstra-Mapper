@@ -53,9 +53,15 @@ var AudioType = TYPES.OGG
 # new format: "position index": {type, endTime, yIndex}
 var notesDatas = {}
 
+# NEW FEATURE
+# added time markers for live mapping helper
+var markersDatas = {}
+
 
 # Meta Information
 ###################
+
+var songFile = "No File"
 
 var songName = "No Name"
 
@@ -89,7 +95,7 @@ func update_positions(audio_position) -> void:
 	songPosInSample = int(SongTracker.songPosition * SongTracker.songFrequency)
 
 
-func add_note(selectedPos: Vector2) -> void:
+func add_note(selectedPos: Vector2, endTime: Vector2 = Vector2.ZERO) -> void:
 	if selectedPos != Vector2(-1, -1):
 		var key = "%d:%d:%d" % [selectedPos.x, selectedPos.y, EditorDatas.currentSide]
 		
@@ -97,9 +103,11 @@ func add_note(selectedPos: Vector2) -> void:
 		notesDatas[key] = {}
 		
 		notesDatas[key]["type"] = EditorDatas.currentType
-		notesDatas[key]["endTime"] = 0
+		notesDatas[key]["endTime"] = endTime
 		
-		print(notesDatas)
+		#print(notesDatas[key])
+		get_tree().get_nodes_in_group("Message")[0].display_message("Note Added | " + key + to_json(notesDatas[key]))
+			
 
 
 func remove_note(selectedPos: Vector2) -> bool:
@@ -111,3 +119,11 @@ func remove_note(selectedPos: Vector2) -> bool:
 			return true
 			
 	return false
+
+
+func add_markers(side: int) -> void:
+	markersDatas[songPosInSample] = side
+
+
+func remove_markers() -> void:
+	markersDatas.clear()

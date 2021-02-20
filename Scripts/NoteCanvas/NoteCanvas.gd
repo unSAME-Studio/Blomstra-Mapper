@@ -5,6 +5,7 @@ var viewportRect: Rect2
 
 var mouseEntered = false
 var mousePressed = false
+var mouseHold = false
 
 var unitBeatSamples = 0
 var beatNum = 0
@@ -18,6 +19,7 @@ var cachedCanvasWidth = 0.0
 var snappingThreshold = 25.0
 
 var ClosestNotePosition = Vector2(-1, -1)
+var HoldNotePosition = Vector2(-1, -1)
 
 var beatFont = preload("res://Graphics/Font/BeatLineFont.tres")
 
@@ -167,19 +169,42 @@ func _draw():
 		# Draw all notes
 		for key in SongTracker.notesDatas.keys():
 			var index = key.split(":")
+			var type = SongTracker.notesDatas[key]["type"]
 			#var rect = Rect2(beatLines[int(index[0])][0] - 10, blockLines[int(index[1])][1] - 10, 20, 20)
 			
 			# Change color
-			#var color = Color("5ED2E0")
-			#if int(index[2]) == EditorDatas.SIDE.RIGHT:
-			#	color = Color("4BE048")
+			#var color = Color("54e0a1")
+			var color = Color("#24eff2")
+			if int(index[2]) == EditorDatas.SIDE.RIGHT:
+				color = Color.yellow
 			#draw_rect(rect, color, false, 4)
 			
 			# Check left or right
 			if int(index[2]) == EditorDatas.SIDE.LEFT:
-				draw_texture(left_texture, Vector2(beatLines[int(index[0])][0] - 19, blockLines[int(index[1])][1] - 19), Color("54e0a1"))
+				draw_texture(left_texture, Vector2(beatLines[int(index[0])][0] - 19, blockLines[int(index[1])][1] - 19), color)
 			else:
-				draw_texture(right_texture, Vector2(beatLines[int(index[0])][0] - 11, blockLines[int(index[1])][1] - 19), Color("54e0a1"))
+				draw_texture(right_texture, Vector2(beatLines[int(index[0])][0] - 11, blockLines[int(index[1])][1] - 19), color)
+			
+			# Check if drawing a hold note
+			if type == EditorDatas.NOTE_TYPE.HOLD:
+				var end_index = SongTracker.notesDatas[key]["endTime"]
+				draw_line(
+					Vector2(beatLines[int(index[0])][0], blockLines[int(index[1])][1]),
+					Vector2(beatLines[end_index.x][0], blockLines[end_index.y][1]),
+					color,
+					5
+				)
+				
+		# Draw all markers
+		# Convertion.SamplesToCanvasPositionX(beatSamples[i], EditorDatas.width)
+		for key in SongTracker.markersDatas.keys():
+			var side = SongTracker.markersDatas[key]
+			var x_pos = Convertion.SamplesToCanvasPositionX(key, EditorDatas.width)
+			
+			if side == 0:
+				draw_rect(Rect2(x_pos - 10, EditorDatas.height + 50, 20, 20), Color("#24eff2"), true)
+			else:
+				draw_rect(Rect2(x_pos - 10, EditorDatas.height + 90, 20, 20), Color.yellow, true)
 
 
 func add_notes(selectedPos: Vector2):
@@ -249,28 +274,47 @@ func _on_ViewportContainer_mouse_exited():
 
 
 # Detect click events and add notes
-func _on_ViewportContainer_gui_input(event):
+func _on_ViewportContainer_gui_input(event) -> void:
 	if event is InputEventMouseButton:
 		
 		mousePressed = Input.is_action_just_pressed("add_note")
-		if Input.is_action_just_pressed("add_note"):
+		if mousePressed:
 			
 			# Check for the sides
 			if event.get_button_index() == BUTTON_LEFT:
 				EditorDatas.currentSide = EditorDatas.SIDE.LEFT
 			elif event.get_button_index() == BUTTON_RIGHT:
 				EditorDatas.currentSide = EditorDatas.SIDE.RIGHT
-			
+				
 			# Check if eraser is activated
-			if EditorDatas.erase == false:
-				SongTracker.add_note(ClosestNotePosition)
-			else:
+			if EditorDatas.erase == true:
 				SongTracker.remove_note(ClosestNotePosition)
+				return
+				
+			# Check if note type is hold
+			if EditorDatas.currentType == EditorDatas.NOTE_TYPE.HOLD:
+				mouseHold = true
+				HoldNotePosition = ClosestNotePosition
+			else:
+				SongTracker.add_note(ClosestNotePosition)
+		
+		# Check if note type is hold and release
+		if Input.is_action_just_released("add_note"):
+			if mouseHold:
+				mouseHold = false
+				SongTracker.add_note(HoldNotePosition, ClosestNotePosition)
 	
 	# Check for moving erasers
 	elif event is InputEventMouseMotion:
 		if mousePressed and EditorDatas.erase == true:
 			SongTracker.remove_note(ClosestNotePosition)
+
+
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("live_map_left"):
+		SongTracker.add_markers(0)
+	elif Input.is_action_just_pressed("live_map_right"):
+		SongTracker.add_markers(1)
 
 
 # Recalculate Canvas when song loaded

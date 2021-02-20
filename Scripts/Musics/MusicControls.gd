@@ -27,7 +27,8 @@ func load_audio_file(path):
 			SongTracker.AudioType = SongTracker.TYPES.OGG
 			
 			# Update Meta
-			SongTracker.songName = path.get_file()
+			SongTracker.songFile = path.get_file()
+			SongTracker.songName = path.get_file().trim_suffix(".ogg")
 			SongTracker.songDuration = get_stream().get_length()
 			
 			SongTracker.calculates()
@@ -73,7 +74,6 @@ func _process(_delta):
 		music_ui.set_song_position(currentPosition)
 
 
-
 func _on_FileDialog_file_selected(path):
 	load_audio_file(path)
 
@@ -83,6 +83,10 @@ func _on_Play_toggle_play_audio(play):
 		play_song()
 	elif play == false:
 		stop_song()
+
+
+func _on_Back_pressed():
+	seek(0.0)
 
 
 # Slider Control
@@ -120,3 +124,4 @@ func _input(event):
 # Volume Slider
 func _on_VolumeSlider_value_changed(value):
 	set_volume_db(value - 50)
+

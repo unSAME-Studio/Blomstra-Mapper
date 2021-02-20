@@ -26,3 +26,7 @@ func _on_Side_toggled(button_pressed):
 
 func _on_Eraser_toggled(button_pressed):
 	EditorDatas.erase = button_pressed
+
+
+func _on_ClearMarkers_pressed():
+	SongTracker.remove_markers()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Graphics/EditorTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Graphics/Font/EditorFontSmall.tres" type="DynamicFont" id=2]
@@ -29,33 +29,40 @@
 [ext_resource path="res://Sounds/ClapSound.wav" type="AudioStream" id=28]
 [ext_resource path="res://Scripts/UI/ToolBar.gd" type="Script" id=29]
 
-[sub_resource type="InputEventAction" id=10]
+[sub_resource type="InputEventAction" id=1]
 action = "tap_note"
 pressed = true
 
-[sub_resource type="ShortCut" id=11]
-shortcut = SubResource( 10 )
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
 
-[sub_resource type="ButtonGroup" id=1]
-
-[sub_resource type="InputEventAction" id=8]
-action = "eraser"
-pressed = true
-
-[sub_resource type="ShortCut" id=9]
-shortcut = SubResource( 8 )
+[sub_resource type="ButtonGroup" id=3]
 
 [sub_resource type="InputEventAction" id=4]
-action = "system_save"
+action = "hold_note"
+pressed = true
 
 [sub_resource type="ShortCut" id=5]
 shortcut = SubResource( 4 )
 
 [sub_resource type="InputEventAction" id=6]
-action = "music_playpause"
+action = "eraser"
+pressed = true
 
 [sub_resource type="ShortCut" id=7]
 shortcut = SubResource( 6 )
+
+[sub_resource type="InputEventAction" id=8]
+action = "system_save"
+
+[sub_resource type="ShortCut" id=9]
+shortcut = SubResource( 8 )
+
+[sub_resource type="InputEventAction" id=10]
+action = "music_playpause"
+
+[sub_resource type="ShortCut" id=11]
+shortcut = SubResource( 10 )
 
 [node name="Editor" type="Node"]
 
@@ -125,8 +132,8 @@ custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
 pressed = true
-shortcut = SubResource( 11 )
-group = SubResource( 1 )
+shortcut = SubResource( 2 )
+group = SubResource( 3 )
 icon = ExtResource( 5 )
 expand_icon = true
 
@@ -142,7 +149,8 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
-group = SubResource( 1 )
+shortcut = SubResource( 5 )
+group = SubResource( 3 )
 icon = ExtResource( 7 )
 expand_icon = true
 
@@ -158,7 +166,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
-group = SubResource( 1 )
+group = SubResource( 3 )
 icon = ExtResource( 6 )
 expand_icon = true
 
@@ -174,7 +182,7 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
-group = SubResource( 1 )
+group = SubResource( 3 )
 icon = ExtResource( 9 )
 expand_icon = true
 
@@ -190,8 +198,8 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 toggle_mode = true
 shortcut_in_tooltip = false
-shortcut = SubResource( 9 )
-group = SubResource( 1 )
+shortcut = SubResource( 7 )
+group = SubResource( 3 )
 icon = ExtResource( 23 )
 expand_icon = true
 
@@ -211,10 +219,24 @@ expand_icon = true
 
 [node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
 margin_left = 220.0
-margin_right = 320.0
+margin_right = 309.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
+
+[node name="ClearMarkers" type="Button" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
+margin_left = 313.0
+margin_right = 353.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+hint_tooltip = "Clear All Markers"
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "C"
+icon = ExtResource( 23 )
+expand_icon = true
 
 [node name="Waveform" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
 visible = false
@@ -232,8 +254,8 @@ icon = ExtResource( 23 )
 expand_icon = true
 
 [node name="ClapSound" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 324.0
-margin_right = 424.0
+margin_left = 357.0
+margin_right = 457.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 hint_tooltip = "Play Note Sounds"
@@ -246,15 +268,15 @@ icon = ExtResource( 24 )
 expand_icon = true
 
 [node name="VSeparator2" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 428.0
-margin_right = 528.0
+margin_left = 461.0
+margin_right = 550.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 
 [node name="Open" type="Button" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 532.0
-margin_right = 592.0
+margin_left = 554.0
+margin_right = 614.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 60, 40 )
 hint_tooltip = "Load Music"
@@ -267,8 +289,8 @@ icon = ExtResource( 8 )
 expand_icon = true
 
 [node name="Load" type="Button" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 596.0
-margin_right = 656.0
+margin_left = 618.0
+margin_right = 678.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 60, 0 )
 hint_tooltip = "Open .bst map file"
@@ -281,8 +303,8 @@ icon = ExtResource( 10 )
 expand_icon = true
 
 [node name="Save" type="Button" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 660.0
-margin_right = 726.481
+margin_left = 682.0
+margin_right = 748.481
 margin_bottom = 40.0
 rect_min_size = Vector2( 66.481, 40 )
 hint_tooltip = "Save map as .bst file"
@@ -291,20 +313,20 @@ size_flags_vertical = 3
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 5 )
+shortcut = SubResource( 9 )
 icon = ExtResource( 11 )
 expand_icon = true
 
 [node name="VSeparator3" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 730.0
-margin_right = 830.0
+margin_left = 752.0
+margin_right = 841.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 theme = ExtResource( 1 )
 
 [node name="Meta" type="Button" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 834.0
-margin_right = 874.0
+margin_left = 845.0
+margin_right = 885.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 0 )
 hint_tooltip = "Edit Metadatas"
@@ -317,8 +339,8 @@ icon = ExtResource( 25 )
 expand_icon = true
 
 [node name="Infos" type="Button" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 878.0
-margin_right = 918.0
+margin_left = 889.0
+margin_right = 929.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 0 )
 hint_tooltip = "See Map's Infos"
@@ -332,7 +354,7 @@ align = 0
 expand_icon = true
 
 [node name="VSeparator4" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer"]
-margin_left = 922.0
+margin_left = 933.0
 margin_right = 1022.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
@@ -437,12 +459,25 @@ size_flags_vertical = 4
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 7 )
+shortcut = SubResource( 11 )
 text = "Play"
 script = ExtResource( 14 )
 
-[node name="MusicUI" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer"]
+[node name="Back" type="Button" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer"]
 margin_left = 74.0
+margin_top = 2.0
+margin_right = 144.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 70, 70 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
+shortcut_in_tooltip = false
+text = "Back"
+
+[node name="MusicUI" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer"]
+margin_left = 148.0
 margin_right = 733.0
 margin_bottom = 74.0
 size_flags_horizontal = 3
@@ -452,14 +487,14 @@ __meta__ = {
 }
 
 [node name="SongName" type="Label" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI"]
-margin_right = 659.0
+margin_right = 585.0
 margin_bottom = 41.0
 custom_fonts/font = ExtResource( 3 )
-text = "No Music"
+text = "No Music! Open a song (.ogg) from above."
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI"]
 margin_top = 45.0
-margin_right = 659.0
+margin_right = 585.0
 margin_bottom = 74.0
 size_flags_vertical = 3
 __meta__ = {
@@ -467,30 +502,21 @@ __meta__ = {
 }
 
 [node name="SongPosition" type="Label" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer"]
-margin_right = 52.0
+margin_right = 111.0
 margin_bottom = 29.0
 size_flags_horizontal = 9
-size_flags_vertical = 6
+size_flags_vertical = 7
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0.521569, 0.521569, 0.521569, 1 )
-text = "00:00"
-
-[node name="SongDuration" type="Label" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer"]
-margin_left = 56.0
-margin_right = 119.0
-margin_bottom = 29.0
-size_flags_vertical = 6
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.521569, 0.521569, 0.521569, 1 )
-text = "/ 00:00"
+text = "00:00 / 00:00"
 
 [node name="TimeSlider" type="HSlider" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer"]
-margin_left = 123.0
-margin_right = 659.0
-margin_bottom = 20.0
+margin_left = 115.0
+margin_right = 585.0
+margin_bottom = 29.0
 rect_min_size = Vector2( 300, 20 )
 size_flags_horizontal = 3
-size_flags_vertical = 2
+size_flags_vertical = 3
 theme = ExtResource( 1 )
 step = 0.001
 
@@ -680,7 +706,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MessageBox" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="MessageBox" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer" groups=[
+"Message",
+]]
 margin_left = 10.0
 margin_top = 3.0
 margin_right = 1267.0
@@ -706,10 +734,28 @@ margin_right = 890.0
 margin_bottom = 610.0
 rect_min_size = Vector2( 500, 500 )
 theme = ExtResource( 1 )
-window_title = "Open a File"
+window_title = "Choose a Song"
+mode_overrides_title = false
 mode = 0
 access = 2
-filters = PoolStringArray( "*.ogg ; Vorbis", "*.wav ; Waveform", "*.mp3 ; NOT SUPPORTED" )
+filters = PoolStringArray( "*.ogg ; Vorbis", "*.wav ; NOT SUPPORTED", "*.mp3 ; NOT SUPPORTED" )
+current_dir = "/Godot win64/BST_Mapper"
+current_path = "/Godot win64/BST_Mapper/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialogSave" type="FileDialog" parent="Control/Popups"]
+margin_left = 390.0
+margin_top = 110.0
+margin_right = 890.0
+margin_bottom = 610.0
+rect_min_size = Vector2( 500, 500 )
+theme = ExtResource( 1 )
+window_title = "Save the Map"
+mode_overrides_title = false
+access = 2
+filters = PoolStringArray( "*.bstmap ; Blomstra Map Format" )
 current_dir = "/Godot win64/BST_Mapper"
 current_path = "/Godot win64/BST_Mapper/"
 __meta__ = {
@@ -718,10 +764,10 @@ __meta__ = {
 
 [node name="MetadataDialog" type="ConfirmationDialog" parent="Control/Popups"]
 margin_left = 390.0
-margin_top = 110.0
+margin_top = 210.0
 margin_right = 890.0
-margin_bottom = 610.0
-rect_min_size = Vector2( 500, 500 )
+margin_bottom = 510.0
+rect_min_size = Vector2( 500, 300 )
 theme = ExtResource( 1 )
 window_title = "Edit Metadata"
 
@@ -737,18 +783,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
-margin_top = 39.0
+[node name="Label5" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_top = 8.0
 margin_right = 122.0
-margin_bottom = 68.0
+margin_bottom = 37.0
+size_flags_vertical = 6
+text = "Song File:"
+
+[node name="EditFile" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_left = 126.0
+margin_top = 8.0
+margin_right = 484.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
+margin_top = 58.0
+margin_right = 122.0
+margin_bottom = 87.0
 size_flags_vertical = 6
 text = "Song Name:"
 
 [node name="EditName" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
 margin_left = 126.0
-margin_top = 39.0
+margin_top = 58.0
 margin_right = 484.0
-margin_bottom = 68.0
+margin_bottom = 87.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 __meta__ = {
@@ -756,17 +820,17 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
-margin_top = 151.0
+margin_top = 108.0
 margin_right = 122.0
-margin_bottom = 180.0
+margin_bottom = 137.0
 size_flags_vertical = 6
 text = "Song Artist:"
 
 [node name="EditArtist" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
 margin_left = 126.0
-margin_top = 151.0
+margin_top = 108.0
 margin_right = 484.0
-margin_bottom = 180.0
+margin_bottom = 137.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 __meta__ = {
@@ -774,17 +838,17 @@ __meta__ = {
 }
 
 [node name="Label3" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
-margin_top = 263.0
+margin_top = 158.0
 margin_right = 122.0
-margin_bottom = 292.0
+margin_bottom = 187.0
 size_flags_vertical = 6
 text = "Map Creator:"
 
 [node name="EditCreator" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
 margin_left = 126.0
-margin_top = 263.0
+margin_top = 158.0
 margin_right = 484.0
-margin_bottom = 292.0
+margin_bottom = 187.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 __meta__ = {
@@ -792,17 +856,17 @@ __meta__ = {
 }
 
 [node name="Label4" type="Label" parent="Control/Popups/MetadataDialog/GridContainer"]
-margin_top = 375.0
+margin_top = 208.0
 margin_right = 122.0
-margin_bottom = 404.0
+margin_bottom = 237.0
 size_flags_vertical = 6
 text = "Song Difficulty:"
 
 [node name="EditDifficulty" type="LineEdit" parent="Control/Popups/MetadataDialog/GridContainer"]
 margin_left = 126.0
-margin_top = 375.0
+margin_top = 208.0
 margin_right = 484.0
-margin_bottom = 404.0
+margin_bottom = 237.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 __meta__ = {
@@ -821,14 +885,17 @@ stream = ExtResource( 28 )
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Effects" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_Effects_pressed"]
 [connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Eraser" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_Eraser_toggled"]
 [connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Side" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_Side_toggled"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/ClearMarkers" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_ClearMarkers_pressed"]
 [connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Waveform" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/WaveformRender" method="_on_Waveform_toggled"]
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Open" to="Control/Popups" method="_on_Open_button_down"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Save" to="Control/Popups" method="_on_Save_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Meta" to="Control/Popups" method="_on_Meta_pressed"]
 [connection signal="gui_input" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_gui_input"]
 [connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_entered"]
 [connection signal="mouse_exited" from="Control/MarginContainer/VBoxContainer/ViewportContainer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_ViewportContainer_mouse_exited"]
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" method="_on_Play_button_down"]
 [connection signal="toggle_play_audio" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Play" to="AudioStreamPlayer" method="_on_Play_toggle_play_audio"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/Back" to="AudioStreamPlayer" method="_on_Back_pressed"]
 [connection signal="gui_input" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer/TimeSlider" to="AudioStreamPlayer" method="_on_TimeSlider_gui_input"]
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI/HBoxContainer/TimeSlider" to="AudioStreamPlayer" method="_on_TimeSlider_value_changed"]
 [connection signal="lpb_updated" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SongSettings/LPB" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_LPB_lpb_updated"]
@@ -841,7 +908,8 @@ stream = ExtResource( 28 )
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" method="_on_ZoomSlider_value_changed"]
 [connection signal="meta_edited" from="Control/Popups" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_Popups_meta_edited"]
 [connection signal="file_selected" from="Control/Popups/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
+[connection signal="file_selected" from="Control/Popups/FileDialogSave" to="Control/Popups" method="_on_FileDialogSave_file_selected"]
 [connection signal="confirmed" from="Control/Popups/MetadataDialog" to="Control/Popups" method="_on_MetadataDialog_confirmed"]
 [connection signal="song_loaded" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_AudioStreamPlayer_song_loaded"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
