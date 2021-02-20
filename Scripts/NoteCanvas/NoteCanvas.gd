@@ -4,6 +4,7 @@ extends Node2D
 var viewportRect: Rect2
 
 var mouseEntered = false
+var mousePressed = false
 
 var unitBeatSamples = 0
 var beatNum = 0
@@ -23,6 +24,9 @@ var beatFont = preload("res://Graphics/Font/BeatLineFont.tres")
 var line2d = preload("res://Scenes/Line2D.tscn")
 
 var note = preload("res://Scenes/Note.tscn")
+
+var right_texture = preload("res://Graphics/Icons/RightNote.png")
+var left_texture = preload("res://Graphics/Icons/LeftNote.png")
 
 
 func _ready():
@@ -163,14 +167,19 @@ func _draw():
 		# Draw all notes
 		for key in SongTracker.notesDatas.keys():
 			var index = key.split(":")
-			var rect = Rect2(beatLines[int(index[0])][0] - 10, blockLines[int(index[1])][1] - 10, 20, 20)
+			#var rect = Rect2(beatLines[int(index[0])][0] - 10, blockLines[int(index[1])][1] - 10, 20, 20)
 			
 			# Change color
-			var color = Color("5ED2E0")
-			if int(index[2]) == EditorDatas.SIDE.RIGHT:
-				color = Color("4BE048")
+			#var color = Color("5ED2E0")
+			#if int(index[2]) == EditorDatas.SIDE.RIGHT:
+			#	color = Color("4BE048")
+			#draw_rect(rect, color, false, 4)
 			
-			draw_rect(rect, color, false, 4)
+			# Check left or right
+			if int(index[2]) == EditorDatas.SIDE.LEFT:
+				draw_texture(left_texture, Vector2(beatLines[int(index[0])][0] - 19, blockLines[int(index[1])][1] - 19), Color("54e0a1"))
+			else:
+				draw_texture(right_texture, Vector2(beatLines[int(index[0])][0] - 11, blockLines[int(index[1])][1] - 19), Color("54e0a1"))
 
 
 func add_notes(selectedPos: Vector2):
@@ -242,11 +251,26 @@ func _on_ViewportContainer_mouse_exited():
 # Detect click events and add notes
 func _on_ViewportContainer_gui_input(event):
 	if event is InputEventMouseButton:
-		if event.is_pressed():
+		
+		mousePressed = Input.is_action_just_pressed("add_note")
+		if Input.is_action_just_pressed("add_note"):
+			
+			# Check for the sides
 			if event.get_button_index() == BUTTON_LEFT:
-				SongTracker.add_note(ClosestNotePosition)
+				EditorDatas.currentSide = EditorDatas.SIDE.LEFT
 			elif event.get_button_index() == BUTTON_RIGHT:
+				EditorDatas.currentSide = EditorDatas.SIDE.RIGHT
+			
+			# Check if eraser is activated
+			if EditorDatas.erase == false:
+				SongTracker.add_note(ClosestNotePosition)
+			else:
 				SongTracker.remove_note(ClosestNotePosition)
+	
+	# Check for moving erasers
+	elif event is InputEventMouseMotion:
+		if mousePressed and EditorDatas.erase == true:
+			SongTracker.remove_note(ClosestNotePosition)
 
 
 # Recalculate Canvas when song loaded

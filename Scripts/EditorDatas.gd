@@ -33,6 +33,8 @@ var offsetX = 0.0
 # Misc
 ###################
 
+var erase = false
+
 var showWaveform = true
 
 var playClapSound = true

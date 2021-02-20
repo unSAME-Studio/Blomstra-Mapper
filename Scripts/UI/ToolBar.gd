@@ -22,3 +22,7 @@ func _on_Side_toggled(button_pressed):
 		EditorDatas.currentSide = EditorDatas.SIDE.RIGHT
 	else:
 		EditorDatas.currentSide = EditorDatas.SIDE.LEFT
+
+
+func _on_Eraser_toggled(button_pressed):
+	EditorDatas.erase = button_pressed
