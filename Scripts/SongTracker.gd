@@ -103,6 +103,12 @@ func add_note(selectedPos: Vector2, endTime: Vector2 = Vector2.ZERO) -> void:
 		notesDatas[key] = {}
 		
 		notesDatas[key]["type"] = EditorDatas.currentType
+		
+		# make sure endtime is not null
+		# if null switch to normal endtime
+		if endTime == Vector2(-1, -1):
+			endTime = selectedPos + Vector2(2, 0)
+		
 		notesDatas[key]["endTime"] = endTime
 		
 		#print(notesDatas[key])

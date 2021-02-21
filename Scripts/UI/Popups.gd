@@ -7,8 +7,12 @@ func _on_Open_button_down():
 	$FileDialog.popup_centered()
 
 
+func _on_Load_pressed():
+	$FileDialogOpen.popup_centered()
+
+
 func _on_Save_pressed():
-	$FileDialogSave.set_current_file("%s.bstmap" % [SongTracker.songFile])
+	$FileDialogSave.set_current_file("%s.bstmap" % [SongTracker.songName])
 	
 	$FileDialogSave.popup_centered()
 

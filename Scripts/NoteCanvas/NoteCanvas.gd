@@ -175,15 +175,17 @@ func _draw():
 			# Change color
 			#var color = Color("54e0a1")
 			var color = Color("#24eff2")
+			var texture = left_texture
+			
 			if int(index[2]) == EditorDatas.SIDE.RIGHT:
 				color = Color.yellow
-			#draw_rect(rect, color, false, 4)
+				texture = right_texture
 			
 			# Check left or right
 			if int(index[2]) == EditorDatas.SIDE.LEFT:
-				draw_texture(left_texture, Vector2(beatLines[int(index[0])][0] - 19, blockLines[int(index[1])][1] - 19), color)
+				draw_texture(texture, Vector2(beatLines[int(index[0])][0] - 19, blockLines[int(index[1])][1] - 19), color)
 			else:
-				draw_texture(right_texture, Vector2(beatLines[int(index[0])][0] - 11, blockLines[int(index[1])][1] - 19), color)
+				draw_texture(texture, Vector2(beatLines[int(index[0])][0] - 11, blockLines[int(index[1])][1] - 19), color)
 			
 			# Check if drawing a hold note
 			if type == EditorDatas.NOTE_TYPE.HOLD:
@@ -201,10 +203,18 @@ func _draw():
 			var side = SongTracker.markersDatas[key]
 			var x_pos = Convertion.SamplesToCanvasPositionX(key, EditorDatas.width)
 			
+			var color = Color("#24eff2")
+			if side == EditorDatas.SIDE.RIGHT:
+				color = Color.yellow
+			
+			draw_line(Vector2(x_pos, EditorDatas.height), Vector2(x_pos, EditorDatas.height + 120), color, 2)
+			
 			if side == 0:
-				draw_rect(Rect2(x_pos - 10, EditorDatas.height + 50, 20, 20), Color("#24eff2"), true)
+				draw_circle(Vector2(x_pos, EditorDatas.height + 60), 10, color)
+				#draw_rect(Rect2(x_pos - 10, EditorDatas.height + 50, 20, 20), Color("#24eff2"), true)
 			else:
-				draw_rect(Rect2(x_pos - 10, EditorDatas.height + 90, 20, 20), Color.yellow, true)
+				draw_circle(Vector2(x_pos, EditorDatas.height + 90), 10, color)
+				#draw_rect(Rect2(x_pos - 10, EditorDatas.height + 80, 20, 20), Color.yellow, true)
 
 
 func add_notes(selectedPos: Vector2):
