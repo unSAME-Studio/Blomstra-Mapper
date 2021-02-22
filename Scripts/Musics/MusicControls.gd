@@ -14,6 +14,10 @@ onready var music_ui = get_node("../Control/MarginContainer/VBoxContainer/Playba
 var currentPosition = 0.0
 
 
+func _init():
+	Global.music_control_ref = self
+
+
 func load_audio_file(path):
 	# Load audio file into the player from a path
 	match path.get_extension():

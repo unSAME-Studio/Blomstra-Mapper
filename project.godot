@@ -30,6 +30,7 @@ SongTracker="*res://Scripts/SongTracker.gd"
 EditorDatas="*res://Scripts/EditorDatas.gd"
 Convertion="*res://Scripts/Utility/Convertion.gd"
 MapSaver="*res://Scripts/MapSaver.gd"
+Global="*res://Scripts/Global.gd"
 
 [display]
 

@@ -28,7 +28,11 @@ var line2d = preload("res://Scenes/Line2D.tscn")
 var note = preload("res://Scenes/Note.tscn")
 
 var right_texture = preload("res://Graphics/Icons/RightNote.png")
+var right_slide_texture = preload("res://Graphics/Icons/RightSlide.png")
+var right_effect_texture = preload("res://Graphics/Icons/RightEffect.png")
 var left_texture = preload("res://Graphics/Icons/LeftNote.png")
+var left_slide_texture = preload("res://Graphics/Icons/LeftSlide.png")
+var left_effect_texture = preload("res://Graphics/Icons/LeftEffect.png")
 
 
 func _ready():
@@ -168,24 +172,20 @@ func _draw():
 		
 		# Draw all notes
 		for key in SongTracker.notesDatas.keys():
-			var index = key.split(":")
+			var index = key.split(",")
 			var type = SongTracker.notesDatas[key]["type"]
 			#var rect = Rect2(beatLines[int(index[0])][0] - 10, blockLines[int(index[1])][1] - 10, 20, 20)
 			
 			# Change color
-			#var color = Color("54e0a1")
-			var color = Color("#24eff2")
-			var texture = left_texture
-			
-			if int(index[2]) == EditorDatas.SIDE.RIGHT:
-				color = Color.yellow
-				texture = right_texture
+			var i = NoteTypeColorTexture(int(index[2]), type)
+			var color = i[0]
+			var texture = i[1]
 			
 			# Check left or right
 			if int(index[2]) == EditorDatas.SIDE.LEFT:
-				draw_texture(texture, Vector2(beatLines[int(index[0])][0] - 19, blockLines[int(index[1])][1] - 19), color)
+				draw_texture(texture, Vector2(beatLines[int(index[0])][0] - 21, blockLines[int(index[1])][1] - 20.5), color)
 			else:
-				draw_texture(texture, Vector2(beatLines[int(index[0])][0] - 11, blockLines[int(index[1])][1] - 19), color)
+				draw_texture(texture, Vector2(beatLines[int(index[0])][0] - 9, blockLines[int(index[1])][1] - 21), color)
 			
 			# Check if drawing a hold note
 			if type == EditorDatas.NOTE_TYPE.HOLD:
@@ -203,9 +203,9 @@ func _draw():
 			var side = SongTracker.markersDatas[key]
 			var x_pos = Convertion.SamplesToCanvasPositionX(key, EditorDatas.width)
 			
-			var color = Color("#24eff2")
+			var color = Color("#1CBCBF")
 			if side == EditorDatas.SIDE.RIGHT:
-				color = Color.yellow
+				color = Color("#CCCC00")
 			
 			draw_line(Vector2(x_pos, EditorDatas.height), Vector2(x_pos, EditorDatas.height + 120), color, 2)
 			
@@ -273,6 +273,24 @@ func BeatLineColor(beat: int):
 		return Color("475662")
 	else:
 		return Color("2e3840")
+
+
+func NoteTypeColorTexture(side: int, type: int):
+	match [type, side]:
+		[0, 0], [1, 0]:
+			return [Color("#24eff2"), left_texture]
+		[0, 1], [1, 1]:
+			return [Color.yellow, right_texture]
+		[2, 0]:
+			return [Color("#24eff2"), left_slide_texture]
+		[2, 1]:
+			return [Color.yellow, right_slide_texture]
+		[3, 0]:
+			return [Color.pink, left_effect_texture]
+		[3, 1]:
+			return [Color.pink, right_effect_texture]
+		_:
+			return [Color.pink, left_effect_texture]
 
 
 # Capture mouse when entered

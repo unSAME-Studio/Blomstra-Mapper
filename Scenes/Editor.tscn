@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Graphics/EditorTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Graphics/Font/EditorFontSmall.tres" type="DynamicFont" id=2]
@@ -34,6 +34,8 @@
 [ext_resource path="res://Graphics/Icons/Help.png" type="Texture" id=32]
 [ext_resource path="res://Graphics/Icons/Volume.png" type="Texture" id=33]
 [ext_resource path="res://Graphics/Icons/Zoom.png" type="Texture" id=34]
+[ext_resource path="res://Graphics/Icons/Back.png" type="Texture" id=35]
+[ext_resource path="res://Graphics/Icons/Play.png" type="Texture" id=36]
 
 [sub_resource type="InputEventAction" id=1]
 action = "tap_note"
@@ -485,7 +487,8 @@ theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 11 )
-text = "Play"
+icon = ExtResource( 36 )
+expand_icon = true
 script = ExtResource( 14 )
 
 [node name="Back" type="Button" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer"]
@@ -499,7 +502,8 @@ size_flags_vertical = 4
 theme = ExtResource( 1 )
 custom_fonts/font = ExtResource( 2 )
 shortcut_in_tooltip = false
-text = "Back"
+icon = ExtResource( 35 )
+expand_icon = true
 
 [node name="MusicUI" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer"]
 margin_left = 148.0
@@ -759,9 +763,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MessageBox" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer" groups=[
-"Message",
-]]
+[node name="MessageBox" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer"]
 margin_left = 10.0
 margin_top = 3.0
 margin_right = 1267.0
@@ -956,6 +958,7 @@ stream = ExtResource( 28 )
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Effects" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_Effects_pressed"]
 [connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Eraser" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_Eraser_toggled"]
 [connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Side" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_Side_toggled"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/AddMarker" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_AddMarker_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/ClearMarkers" to="Control/MarginContainer/VBoxContainer/ToolBar" method="_on_ClearMarkers_pressed"]
 [connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Waveform" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/WaveformRender" method="_on_Waveform_toggled"]
 [connection signal="button_down" from="Control/MarginContainer/VBoxContainer/ToolBar/MarginContainer/HBoxContainer/Open" to="Control/Popups" method="_on_Open_button_down"]
@@ -980,9 +983,9 @@ stream = ExtResource( 28 )
 [connection signal="value_changed" from="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/VBoxContainer/SliderControls/ZoomSlider" method="_on_ZoomSlider_value_changed"]
 [connection signal="meta_edited" from="Control/Popups" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_Popups_meta_edited"]
 [connection signal="file_selected" from="Control/Popups/FileDialog" to="AudioStreamPlayer" method="_on_FileDialog_file_selected"]
-[connection signal="file_selected" from="Control/Popups/FileDialogOpen" to="Control/Popups" method="_on_FileDialogSave_file_selected"]
+[connection signal="file_selected" from="Control/Popups/FileDialogOpen" to="Control/Popups" method="_on_FileDialogOpen_file_selected"]
 [connection signal="file_selected" from="Control/Popups/FileDialogSave" to="Control/Popups" method="_on_FileDialogSave_file_selected"]
 [connection signal="confirmed" from="Control/Popups/MetadataDialog" to="Control/Popups" method="_on_MetadataDialog_confirmed"]
 [connection signal="song_loaded" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/ViewportContainer/Viewport/NoteCanvas" method="_on_AudioStreamPlayer_song_loaded"]
-[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]
 [connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/MarginContainer/MessageBox" method="_on_AudioPlayer_update_song_meta"]
+[connection signal="update_song_meta" from="AudioStreamPlayer" to="Control/MarginContainer/VBoxContainer/PlaybackControls/MarginContainer/HBoxContainer/MusicUI" method="_on_AudioPlayer_update_song_meta"]

@@ -30,3 +30,9 @@ func _on_Eraser_toggled(button_pressed):
 
 func _on_ClearMarkers_pressed():
 	SongTracker.remove_markers()
+
+
+func _on_AddMarker_pressed():
+	pass
+	Input.action_press("live_map_left")
+	Input.action_release("live_map_left")

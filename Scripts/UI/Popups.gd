@@ -41,4 +41,7 @@ func _on_MetadataDialog_confirmed():
 
 func _on_FileDialogSave_file_selected(path):
 	MapSaver.save_map_to_path(path)
-	print(path)
+
+
+func _on_FileDialogOpen_file_selected(path):
+	MapSaver.load_map(path)

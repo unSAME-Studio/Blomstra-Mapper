@@ -2,6 +2,8 @@ extends Label
 
 
 func _ready() -> void:
+	Global.messager_ref = self
+	
 	display_message("Blomstra Map Editor v0.0.1", 2)
 
 
@@ -12,4 +14,4 @@ func display_message(string: String, sec: int = 3) -> void:
 
 
 func _on_AudioPlayer_update_song_meta() -> void:
-	display_message("Song Loaded! %s" % SongTracker.songName, 2)
+	display_message("Song Loaded | %s" % SongTracker.songName, 2)
